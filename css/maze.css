@@ -1,0 +1,239 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    font-family: 'Press Start 2P', sans-serif;
+    background-color: #1A1A2E;
+    color: #EAEAEA;
+}
+
+h2 {
+    font-size: 40px;
+    color: #F9D74D;
+    transition: 0.5s;
+	margin-top: 30px;
+}
+
+#about h2, #play h2, #settings h2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0 50px;
+}
+
+h2:hover, #home h2:hover, #play h2:hover {
+    color: #DE36F6;
+    background-color: #000;
+}
+
+/* Add new styles for Leaderboard */
+#leaderboard {
+    text-align: center;
+    margin: 50px auto;
+    width: 90%;
+    color: #F9D74D;
+}
+
+#leaderboard h2 {
+    font-size: 40px;
+    color: #F9D74D;
+}
+
+#leaderboard-list {
+    list-style: none;
+    padding: 0;
+}
+
+#leaderboard-list li {
+    font-size: 22px;
+    color: #EAEAEA;
+    margin: 10px;
+}
+
+/* Create Username Section */
+#create-username {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#username-input {
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 20px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 2px solid #F9D74D;
+    color: #1F3155;
+    background-color: #EAEAEA;
+    margin-right: 10px;
+}
+
+#create-username-btn {
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 20px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 2px solid #F9D74D;
+    background-color: #F9D74D;
+    color: #1F3155;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#create-username-btn:hover {
+    background-color: #1F3155;
+    color: #F9D74D;
+}
+
+.textInput {
+    color: #000;
+    font-family: 'Press Start 2P', sans-serif;
+    border: none;
+    font-size: 20px;
+    width: 200px;
+}
+
+#home {
+    height: 800px;
+}
+
+#about, #settings, #play {
+    margin: 0 auto;
+    padding: 40px 0;
+    width: 90%;
+}
+
+#about p, #settings p {
+    color: pink;
+    transition: 0.5s;
+    font-size: 22px;
+    letter-spacing: 1px;
+}
+
+#about p:hover, #about ul:hover, #hint_settings:hover, #hint_play:hover {
+    color: #a3c962;
+}
+
+#about ul li, #about ul {
+    margin: 8px;
+    font-size: 17px;
+    letter-spacing: 1px;
+}
+
+#header h1 {
+    margin-top: 250px;
+    margin-bottom: 40px;
+    font-size: 80px;
+    color: #F9D74D;
+    transition: 0.5s;
+}
+
+#header h1:hover {
+    padding-top: 30px;
+    padding-bottom: 30px;
+	text-decoration: none;
+    color: #1F3155;
+    background-color: #F9D74D;
+}
+
+#nav {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+}
+
+#nav a {
+    font-size: 18px;
+    padding: 8px 18px;
+    border-radius: 12px;
+    color: #F9D74D;
+    text-decoration: none;
+    transition: 0.5s;
+}
+
+#nav a:hover {
+    color: #1F3155;
+    background-color: #F8CE27;
+}
+
+#start-game, #rst-btn, #cfm-btn, #str-btn, #skp-btn1, #skp-btn2 {
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    text-decoration: none;
+    transition: 0.5s;
+	margin-top: 30px;
+}
+
+#start-game {
+    background-color: #F9D74D;
+}
+
+#start-game:hover {
+    background-color: black;
+    padding: 18px 24px;
+    border-radius: 35px;
+}
+
+#cfm-btn, #skp-btn1, #skp-btn2 {
+    background-color: #ED6D4D;
+    color: #F9D74D;
+	font-family: 'Press Start 2P', sans-serif;
+}
+
+#cfm-btn:hover, #skp-btn1:hover, #skp-btn2:hover {
+    background-color: #a3c962;
+}
+
+#str-btn {
+    background-color: black;
+	font-family: 'Press Start 2P', sans-serif;
+}
+
+#str-btn:hover {
+    background-color: #a3c962;
+}
+
+.textInput{
+	color: #000;
+	font-family: 'Press Start 2P', sans-serif;
+	border: none;
+	font-size: 20px;
+	width: 40px;
+}
+
+.checkInput{
+	border: none;
+}
+
+#rst-btn {
+    background-color: #a3c962;
+    color: white;
+    border: 2px solid #fff;
+    padding: 7px 17px;
+}
+
+#rst-btn:hover {
+    background: #000;
+}
+
+#maze {
+    width: 100%;
+    height: 400px; /* adjust the height to your needs */
+    border: 1px solid #fff;
+    margin: 0 auto;
+}

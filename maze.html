@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Maze</title>
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/maze.js"></script>
+		<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <link type="text/css" rel="stylesheet" href="css/maze.css">
+    </head>
+    <body onload="init()">
+
+        <a id="topNav" href="#home" onclick="$('#topNav').fadeOut('slow')">2Top</a>
+
+        <div id="home">
+            <div class="spacer"></div>
+            <nav>
+                <ul id="nav">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#settings">Settings</a></li>
+					<li><a href="#leaderboard" id="leaderboard-btn">Leaderboard</a></li>
+                    <li><a href="#play">Play!</a></li>
+                </ul>
+            </nav>
+            <a href="#home" id="header">
+                <h1>M.A.Z.E. QUEST</h1>
+				<h2>Master Algorithmic Zone Exploration</h2>
+            </a>
+
+            <div class="spacer"></div>
+            <a id="start-game" href="#game" onclick="gameStart()">Start Game</a>
+
+            <!-- Create Username Section -->
+            <div id="create-username">
+                <input type="text" id="username-input" placeholder="Enter Username" class="textInput"/>
+                <button id="create-username-btn" onclick="createUsername()">Create Username</button>
+            </div>
+            
+            <div class="spacer"></div>
+        </div>
+
+		<div id="about">
+			<div class="spacer"></div>
+			<h2>About</h2>
+			<p>Hello, I'm <em>Computer Maze Solver v1.0</em> – your interactive maze-solving companion!</p>
+			<p>I generate random mazes and solve them <strong>using various algorithms</strong> to find the best path.</p>
+			<p>Here's an example of a solved maze:</p>
+			<img src="./src/example.png" alt="Example of a solved maze." />
+			<p>This page is designed to be fully interactive, so feel free to explore and find hidden surprises!</p>
+			<p>The maze-solving process is highly customizable to suit your preferences.</p>
+			<br/>
+			<p>I support several solving algorithms:</p>
+			<ul>
+				<li>BFS (Breadth-First Search)</li>
+				<li>A* (A-star)</li>
+				<li>WFS (Wavefront Search)</li>
+				<li>DFS (Depth-First Search)</li>
+			</ul>
+			<p>For optimal performance, I default to BFS, but you can choose any algorithm you prefer.</p>
+			<br/>
+			<p>Additionally, there are <strong>four customizable themes</strong> available for the maze.</p>
+			<p>You can change the theme <strong>at any time</strong>, even while the maze is being solved!</p>
+			<br/>
+			<p>The maze size can range from <strong>10 x 10</strong> to <strong>160 x 160</strong> cells.</p>
+			<p>The default size is <strong>120 x 80</strong>.</p>
+			<p><em>— And don’t worry, I can handle all invalid input with ease!</em></p>
+			<br/>
+			<p>And that’s not all! Here’s a glimpse of what’s coming soon:</p>
+			<ul>
+				<li>Customizable color schemes, even designed by you</li>
+				<li>More maze-solving algorithms to choose from</li>
+				<li>Simultaneous maze-solving for comparison</li>
+				<li>And much more...</li>
+			</ul>
+			<div class="spacer"></div>
+		</div>		
+
+        <div id="settings">
+            <div class="spacer"></div>
+            <h2 style="color: #E93F51;">Settings</h2>
+            <p>
+                Row <input id="inRow" type="text" class="textInput" /> 
+                Col <input id="inCol" type="text" class="textInput" />
+                <button id="cfm-btn" onclick="confirm()">
+                    Confirm
+                </button>
+                <a href="#game">
+                    <button id="str-btn" onclick="gameStart()">
+                        Start Game
+                    </button>
+                </a>
+            </p> 
+            <p id="solverSelect">
+                <strong>Solver:</strong> &nbsp;&nbsp;&nbsp;
+                BFS <input id="solver0" value="0" type="radio" name="solvers" onclick="solverChange()" /> &nbsp;
+                A*  <input id="solver1" value="1" type="radio" name="solvers" onclick="solverChange()" /> &nbsp;
+                WFS <input id="solver2" value="2" type="radio" name="solvers" onclick="solverChange()" /> &nbsp;
+                DFS <input id="solver3" value="3" type="radio" name="solvers" onclick="solverChange()" /> &nbsp;
+            </p>
+            <p>
+                Show drawing animation 
+                <input id="inAniMaze" type="checkbox" class="checkInput" onclick="checkChange()" />
+                <br/>
+                Show solving animation 
+                <input id="inAniSolv" type="checkbox" class="checkInput" onclick="checkChange()" />
+            </p> 
+
+            <p id="hint_settings" onclick="$(this).fadeOut('slow')"> </p>
+            <div class="spacer"></div>
+        </div>
+
+        <div id="play">
+            <div class="spacer"></div>
+            <a href="#game">
+                <h2 onclick="gameStart()">
+                    Have fun!
+                </h2> 
+            </a>
+            <div id="game" class="spacer"></div>
+            <button id="rst-btn" onclick="gameRestart()">
+                Restart
+            </button>
+            <button id="skp-btn1" onclick="skip1()">
+                Skip Creating
+            </button>
+            <button id="skp-btn2" onclick="skip2()">
+                Skip Solving
+            </button>
+            <br/>
+            <p>
+                <strong>Theme:</strong> &nbsp;&nbsp;&nbsp;
+                Candy Floss <input id="color0" value="0" type="radio" name="colors" onclick="colorChange()" /> &nbsp;&nbsp;
+                Buttercream <input id="color1" value="1" type="radio" name="colors" onclick="colorChange()" /> &nbsp;&nbsp;
+                Venomous Green <input id="color2" value="2" type="radio" name="colors" onclick="colorChange()" /> &nbsp;&nbsp;
+                Steel Mist <input id="color3" value="3" type="radio" name="colors" onclick="colorChange()" /> &nbsp;&nbsp;
+            </p>
+            
+            <div id="maze"></div>
+            <p id="hint_play" onclick="$(this).fadeOut('slow')"> </p>
+            <div class="spacer" id="btm"></div>
+        </div>
+        
+    </body>
+</html>
