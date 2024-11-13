@@ -30,28 +30,39 @@ h2:hover, #home h2:hover, #play h2:hover {
     background-color: #000;
 }
 
-/* Add new styles for Leaderboard */
-#leaderboard {
+.leaderboard-container {
     text-align: center;
-    margin: 50px auto;
-    width: 90%;
-    color: #F9D74D;
+    margin: 0 auto;
+    width: 80%;
 }
 
-#leaderboard h2 {
-    font-size: 40px;
-    color: #F9D74D;
+.leaderboard-title {
+    color: #fff;
+    margin-bottom: 20px;
 }
 
-#leaderboard-list {
-    list-style: none;
-    padding: 0;
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-#leaderboard-list li {
-    font-size: 22px;
-    color: #EAEAEA;
-    margin: 10px;
+.leaderboard-table th, .leaderboard-table td {
+    border: 1px solid #666;
+    padding: 10px;
+    font-family: 'Press Start 2P', sans-serif;
+    color: #fff;
+}
+
+.leaderboard-table th {
+    background-color: #333;
+}
+
+.leaderboard-table tr:nth-child(even) {
+    background-color: #222;
+}
+
+.leaderboard-table tr:hover {
+    background-color: #444;
 }
 
 /* Create Username Section */

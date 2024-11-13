@@ -21,12 +21,55 @@ function createUsername() {
     }
 }
 
-function updateLeaderboard(username) {
-    // For now, adding to the list in the DOM (later replace with database integration)
-    const leaderboardList = document.getElementById('leaderboard-list');
-    const listItem = document.createElement('li');
-    listItem.textContent = username;
-    leaderboardList.appendChild(listItem);
+let startTime, endTime;
+let leaderboard = []; // Array to hold leaderboard times
+function startMaze() {
+    startTime = new Date(); // Capture the start time
+    // Additional code to initialize the maze
+}
+function endMaze() {
+    endTime = new Date(); // Capture end time
+    const elapsedTime = (endTime - startTime) / 1000; // Calculate time in seconds
+
+    // Add the time to leaderboard
+    leaderboard.push(elapsedTime);
+    leaderboard.sort((a, b) => a - b); // Sort times in ascending order
+
+    // Display leaderboard
+    displayLeaderboard();
+}
+// Function to add an entry to the leaderboard
+function updateLeaderboard(username, time) {
+    // Add the new player entry to the leaderboard
+    leaderboard.push({ username: username, time: time });
+
+    // Sort the leaderboard by time in ascending order
+    leaderboard.sort((a, b) => a.time - b.time);
+
+    // Limit leaderboard to top 10 entries
+    if (leaderboard.length > 10) {
+        leaderboard = leaderboard.slice(0, 10);
+    }
+
+    // Display the updated leaderboard in the table
+    displayLeaderboard();
+}
+
+// Function to display the leaderboard as a table in the DOM
+function displayLeaderboard() {
+    const leaderboardEntries = document.getElementById('leaderboard-entries');
+    leaderboardEntries.innerHTML = ""; // Clear existing rows
+
+    // Loop through the sorted leaderboard and display each entry as a table row
+    leaderboard.forEach((entry, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${entry.username}</td>
+            <td>${entry.time.toFixed(2)}</td>
+        `;
+        leaderboardEntries.appendChild(row);
+    });
 }
 
 // stack stores the visited addresses, stack_next stores the next possible positions
@@ -286,6 +329,83 @@ function DFS() {
 		}
 	}
 }
+function Dijkstra() {
+	if (start.x === -1) return;
+
+	// Initialize distance and priority queue for visualization
+	let distance = Array.from(Array(maze.length), () => Array(maze[0].length).fill(Infinity));
+	distance[start.x][start.y] = 0;
+
+	let priorityQueue = [{ x: start.x, y: start.y, dist: 0 }];
+	let visited = new Set();
+
+	function step() {
+		if (priorityQueue.length === 0 || (start.x === end.x && start.y === end.y)) {
+			game = 0;
+			drawPath();
+			return;
+		}
+
+		// Sort queue to get the cell with the smallest distance
+		priorityQueue.sort((a, b) => a.dist - b.dist);
+		let { x, y, dist } = priorityQueue.shift();
+		let currentKey = `${x}-${y}`;
+		if (visited.has(currentKey)) {
+			if (isAniSolv) {
+				requestAnimationFrame(step);
+			} else {
+				step();
+			}
+			return;
+		}
+		visited.add(currentKey);
+
+		// Check if we've reached the end
+		if (x === end.x && y === end.y) {
+			game = 0;
+			drawPath();
+			return;
+		}
+
+		// Get neighbors and process each one
+		let neighbours = [];
+		getFNeighbours(neighbours, x, y, 0);
+		getFNeighbours(neighbours, x, y, 5);
+
+		for (let i = 0; i < neighbours.length; i++) {
+			let nx = neighbours[i].x;
+			let ny = neighbours[i].y;
+			let newDist = dist + 1; // Assuming uniform cost of 1
+
+			if (newDist < distance[nx][ny]) {
+				distance[nx][ny] = newDist;
+				priorityQueue.push({ x: nx, y: ny, dist: newDist });
+				stack.push({ x: nx, y: ny });
+
+				// Update visuals for pathfinding progress
+				if (maze[nx][ny] === 0) drawRect(neighbours[i], 4);
+			}
+		}
+
+		// Visualize current path point
+		if (maze[x][y] === 4) drawRect({ x, y }, 2);
+
+		// Conditional animation based on `isAniSolv`
+		if (isAniSolv) {
+			requestAnimationFrame(step);
+		} else {
+			step();
+		}
+	}
+
+	// Start the first step
+	if (isAniSolv) {
+		requestAnimationFrame(step);
+	} else {
+		step();
+	}
+}
+
 function solveMaze() {
 	if (start.x == -1)
 		return;
@@ -294,6 +414,7 @@ function solveMaze() {
 		case 1: BFS_Astar(); break;
 		case 2: stack_next.push(start); WFS(); break;
 		case 3: DFS(); break;
+		case 4: Dijkstra(); break;
 	}
 }
 function getCursorPos(event) {

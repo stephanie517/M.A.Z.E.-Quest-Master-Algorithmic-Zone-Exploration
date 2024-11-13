@@ -10,8 +10,6 @@
     </head>
     <body onload="init()">
 
-        <a id="topNav" href="#home" onclick="$('#topNav').fadeOut('slow')">2Top</a>
-
         <div id="home">
             <div class="spacer"></div>
             <nav>
@@ -19,7 +17,7 @@
                     <li><a href="#home">Home</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#settings">Settings</a></li>
-					<li><a href="#leaderboard" id="leaderboard-btn">Leaderboard</a></li>
+					<li><a href="#leaderboard">Leaderboard</a></li>
                     <li><a href="#play">Play!</a></li>
                 </ul>
             </nav>
@@ -56,6 +54,7 @@
 				<li>A* (A-star)</li>
 				<li>WFS (Wavefront Search)</li>
 				<li>DFS (Depth-First Search)</li>
+                <li>Dijkstra's Algorithm</li>
 			</ul>
 			<p>For optimal performance, I default to BFS, but you can choose any algorithm you prefer.</p>
 			<br/>
@@ -111,6 +110,22 @@
             <div class="spacer"></div>
         </div>
 
+        <div id="leaderboard" class="leaderboard-container">
+            <h2 class="leaderboard-title">Leaderboard</h2>
+            <table class="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Username</th>
+                        <th>Time (seconds)</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-entries">
+                    <!-- Rows will be populated here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
         <div id="play">
             <div class="spacer"></div>
             <a href="#game">
