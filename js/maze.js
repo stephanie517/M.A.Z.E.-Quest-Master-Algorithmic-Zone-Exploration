@@ -83,7 +83,7 @@ function solverChange() {
 	}
 	solverIdx = parseInt( $("input[name='solvers']:checked").val() );
 }
-// The color values can also be changed while the maze is running
+//abc
 function colorChange() {
 	// Using jQuery to return the selected value of colors
 	colorIdx = parseInt( $("input[name='colors']:checked").val() );
