@@ -603,7 +603,6 @@ function confirm() {
 }
 
 function checkChange() {
-	// Do not change animation options while the game is running
 	if (!game) {
 		prompt_settings("Setting done!");
 		isAniSolv = $("#inAniSolv").prop('checked');
