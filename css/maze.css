@@ -67,10 +67,10 @@ h2:hover, #home h2:hover, #play h2:hover {
 
 /* Create Username Section */
 #create-username {
-    margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 50px;
 }
 
 #username-input {
@@ -78,6 +78,7 @@ h2:hover, #home h2:hover, #play h2:hover {
     font-size: 20px;
     padding: 8px 16px;
     border-radius: 10px;
+    width: 300px;
     border: 2px solid #F9D74D;
     color: #1F3155;
     background-color: #EAEAEA;
@@ -178,7 +179,7 @@ h2:hover, #home h2:hover, #play h2:hover {
     background-color: #F8CE27;
 }
 
-#start-game, #rst-btn, #cfm-btn, #str-btn, #skp-btn1, #skp-btn2 {
+#rst-btn, #cfm-btn, #str-btn, #skp-btn1, #skp-btn2 {
     font-size: 20px;
     letter-spacing: 1px;
     color: white;
@@ -188,14 +189,27 @@ h2:hover, #home h2:hover, #play h2:hover {
     text-decoration: none;
     transition: 0.5s;
 	margin-top: 30px;
+    cursor: pointer;
 }
 
 #start-game {
-    background-color: #F9D74D;
+    background-color: #FEE715;
+    font-size: 30px;
+    letter-spacing: 1px;
+    color: #101820;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    text-decoration: none;
+    transition: 0.5s;
+    margin-bottom: 50px;
+    cursor: pointer;
+
 }
 
 #start-game:hover {
-    background-color: black;
+    background-color: #548303;
+    color: #F8CE27;
     padding: 18px 24px;
     border-radius: 35px;
 }
@@ -240,6 +254,23 @@ h2:hover, #home h2:hover, #play h2:hover {
 
 #rst-btn:hover {
     background: #000;
+}
+
+#timer-display {
+    font-family: 'Press Start 2P', sans-serif;
+    font-size: 20px;
+    color: #F9D74D;
+    background-color: #1F3155;
+    padding: 5px 10px;
+    border-radius: 6px;
+    box-shadow: 0 0 10px #F9D74D;
+    margin: 10px auto; /* Center the timer horizontally */
+    display: inline-block;
+}
+
+#timer {
+    font-size: 25px;
+    color: #F9D74D;
 }
 
 #maze {

@@ -9,7 +9,6 @@ colors = [
 	["#EAEAEA", "#D4D4D4", "white",   "black",   "white",   "black",   "black"  ]
 ]
 
-let username = '';
 function createUsername() {
     var username = document.getElementById('username-input').value;
     if (username) {
@@ -21,29 +20,74 @@ function createUsername() {
     }
 }
 
-let startTime, endTime;
-let leaderboard = []; // Array to hold leaderboard times
-function startMaze() {
-    startTime = new Date(); // Capture the start time
-    // Additional code to initialize the maze
-}
-function endMaze() {
-    endTime = new Date(); // Capture end time
-    const elapsedTime = (endTime - startTime) / 1000; // Calculate time in seconds
+let startTime, endTime, timerInterval;
+let isTimerRunning = false;
+let leaderboard = [];
 
-    // Add the time to leaderboard
-    leaderboard.push(elapsedTime);
-    leaderboard.sort((a, b) => a - b); // Sort times in ascending order
-
-    // Display leaderboard
-    displayLeaderboard();
+// Add timer display element update function
+function updateTimerDisplay() {
+    const timerElement = document.getElementById('timer-display');
+    if (!timerElement) return;
+    
+    const currentTime = new Date();
+    const elapsedTime = (currentTime - startTime) / 1000; // Convert to seconds
+    timerElement.textContent = elapsedTime.toFixed(2) + 's';
 }
-// Function to add an entry to the leaderboard
+
+function startTimer() {
+    if (isTimerRunning) return;
+    
+    startTime = new Date();
+    isTimerRunning = true;
+    timerInterval = setInterval(updateTimerDisplay, 10); // Update every 10ms for smooth display
+}
+
+function stopTimer() {
+    if (!isTimerRunning) return;
+    
+    clearInterval(timerInterval);
+    endTime = new Date();
+    isTimerRunning = false;
+    
+    const finalTime = (endTime - startTime) / 1000;
+    
+    // Get username from localStorage
+    const username = localStorage.getItem('username') || 'Anonymous';
+    
+    // Update leaderboard with the final time
+    updateLeaderboard(username, finalTime);
+    
+    return finalTime;
+}
+
+function getCursorPos(event) {
+    if (!game)
+        return;
+    var rect = this.getBoundingClientRect();
+    var x = Math.floor((event.clientX - rect.left) / grid),
+        y = Math.floor((event.clientY - rect.top) / grid);
+    if (maze[x][y]) return;
+
+    if (start.x == -1) {
+        start = { x: x, y: y };
+        begin = { x: x, y: y };
+        drawRect(begin, 6);
+    } else {
+        if (end.x != -1)
+            return;
+        end = { x: x, y: y };
+        drawRect(end, 5);
+        prompt_play("Solving Maze. Enjoy ^_^");
+        if (isAniSolv) {
+            $("#skp-btn2").fadeIn("slow");
+        }
+        startTimer();
+        solveMaze();
+    }
+}
+
 function updateLeaderboard(username, time) {
-    // Add the new player entry to the leaderboard
     leaderboard.push({ username: username, time: time });
-
-    // Sort the leaderboard by time in ascending order
     leaderboard.sort((a, b) => a.time - b.time);
 
     // Limit leaderboard to top 10 entries
@@ -51,14 +95,12 @@ function updateLeaderboard(username, time) {
         leaderboard = leaderboard.slice(0, 10);
     }
 
-    // Display the updated leaderboard in the table
     displayLeaderboard();
 }
 
-// Function to display the leaderboard as a table in the DOM
 function displayLeaderboard() {
     const leaderboardEntries = document.getElementById('leaderboard-entries');
-    leaderboardEntries.innerHTML = ""; // Clear existing rows
+    leaderboardEntries.innerHTML = "";
 
     // Loop through the sorted leaderboard and display each entry as a table row
     leaderboard.forEach((entry, index) => {
@@ -83,7 +125,7 @@ function solverChange() {
 	}
 	solverIdx = parseInt( $("input[name='solvers']:checked").val() );
 }
-//abc
+
 function colorChange() {
 	// Using jQuery to return the selected value of colors
 	colorIdx = parseInt( $("input[name='colors']:checked").val() );
@@ -109,14 +151,18 @@ function iniGame() {
 	begin = { x: -1, y: -1 }; start = { x: -1, y: -1 }; end = { x: -1, y: -1 };
 }
 function gameOver() {
-	iniGame();
-	prompt_play("I'm Done! You can start a new game");
-	$("#skp-btn2").fadeOut("slow");
-	isAniSolv = $("#inAniSolv").prop('checked');
-	$("#solver0").attr("disabled", false);
-	$("#solver1").attr("disabled", false);
-	$("#solver2").attr("disabled", false);
-	$("#solver3").attr("disabled", false);
+    if (isTimerRunning) {
+        const finalTime = stopTimer();
+        prompt_play(`Maze completed in ${finalTime.toFixed(2)} seconds!`);
+    }
+    
+    iniGame();
+    $("#skp-btn2").fadeOut("slow");
+    isAniSolv = $("#inAniSolv").prop('checked');
+    $("#solver0").attr("disabled", false);
+    $("#solver1").attr("disabled", false);
+    $("#solver2").attr("disabled", false);
+    $("#solver3").attr("disabled", false);
 }
 function prompt_settings(message) {
 	// Use jQuery method to modify the content of the <p> tag, the following is the native JS method
@@ -417,30 +463,6 @@ function solveMaze() {
 		case 4: Dijkstra(); break;
 	}
 }
-function getCursorPos(event) {
-	if (!game)
-		return;
-	var rect = this.getBoundingClientRect();
-	var x = Math.floor((event.clientX - rect.left) / grid),
-		y = Math.floor((event.clientY - rect.top) / grid);
-	if (maze[x][y]) return;
-	if (start.x == -1) {
-		start = { x: x, y: y };
-		begin = { x: x, y: y };
-		drawRect(begin, 6);
-	} else {
-		// After confirming the start and end points, do not accept user commands
-		if (end.x != -1)
-			return;
-		end = { x: x, y: y };
-		drawRect(end, 5);
-		prompt_play("Solving Maze. Enjoy ^_^");
-		if (isAniSolv) {
-			$("#skp-btn2").fadeIn("slow");
-		}
-		solveMaze();
-	}
-}
 
 // Bug: The fadeIn animation doesn't work properly when loading, and fadeOut doesn't take effect
 function scrollEvent(event) {
@@ -538,35 +560,41 @@ function createCanvas(w, h) {
 }
 
 function gameStart() {
-	if (game)
-		return;
-	game = 1;
-	iniGame();
-	$("#solver0").attr("disabled", true);
-	$("#solver1").attr("disabled", true);
-	$("#solver2").attr("disabled", true);
-	$("#solver3").attr("disabled", true);
-	prompt_settings("You can change solver and maze size after game!");
-	// Normalize the maze to make it look better
-	if (cols % 2 == 0)--cols;
-	if (rows % 2 == 0)--rows;
-	// Remove the old maze
-	var div = document.getElementById("maze");
-	var canvas = document.getElementById("canvas");
-	if (canvas)
-		div.removeChild(canvas);
-	createCanvas(grid * cols, grid * rows);
-	maze = createArray(cols, rows);
-	start.x = Math.floor(Math.random() * (cols / 2));
-	start.y = Math.floor(Math.random() * (rows / 2));
-	if (!(start.x & 1)) start.x++; if (!(start.y & 1)) start.y++;
-	drawRect(start, 0);
-	$("#rst-btn").fadeIn("slow");
-	prompt_play("Creating Maze~");
-	if (isAniMaze)
-		$("#skp-btn1").fadeIn("slow");
-	createMaze();
-	drawMaze();
+    if (game)
+        return;
+    
+    // Reset timer state
+    if (isTimerRunning) {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+    }
+    
+    game = 1;
+    iniGame();
+    $("#solver0").attr("disabled", true);
+    $("#solver1").attr("disabled", true);
+    $("#solver2").attr("disabled", true);
+    $("#solver3").attr("disabled", true);
+    prompt_settings("You can change solver and maze size after game!");
+    
+    if (cols % 2 == 0)--cols;
+    if (rows % 2 == 0)--rows;
+    var div = document.getElementById("maze");
+    var canvas = document.getElementById("canvas");
+    if (canvas)
+        div.removeChild(canvas);
+    createCanvas(grid * cols, grid * rows);
+    maze = createArray(cols, rows);
+    start.x = Math.floor(Math.random() * (cols / 2));
+    start.y = Math.floor(Math.random() * (rows / 2));
+    if (!(start.x & 1)) start.x++; if (!(start.y & 1)) start.y++;
+    drawRect(start, 0);
+    $("#rst-btn").fadeIn("slow");
+    prompt_play("Creating Maze~");
+    if (isAniMaze)
+        $("#skp-btn1").fadeIn("slow");
+    createMaze();
+    drawMaze();
 }
 
 function gameRestart() {
@@ -603,7 +631,6 @@ function confirm() {
 }
 
 function checkChange() {
-	// Do not change animation options while the game is running
 	if (!game) {
 		prompt_settings("Setting done!");
 		isAniSolv = $("#inAniSolv").prop('checked');
