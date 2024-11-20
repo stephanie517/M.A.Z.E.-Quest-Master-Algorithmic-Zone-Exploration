@@ -61,28 +61,37 @@ function stopTimer() {
 }
 
 function getCursorPos(event) {
-    if (!game)
-        return;
+    if (!game) return;
+
     var rect = this.getBoundingClientRect();
     var x = Math.floor((event.clientX - rect.left) / grid),
         y = Math.floor((event.clientY - rect.top) / grid);
-    if (maze[x][y]) return;
 
-    if (start.x == -1) {
-        start = { x: x, y: y };
-        begin = { x: x, y: y };
-        drawRect(begin, 6);
-    } else {
-        if (end.x != -1)
-            return;
-        end = { x: x, y: y };
-        drawRect(end, 5);
-        prompt_play("Solving Maze. Enjoy ^_^");
-        if (isAniSolv) {
-            $("#skp-btn2").fadeIn("slow");
+    // Check if the user clicked on the maze
+    if (maze[x][y] !== undefined) {
+        // Toggle barrier
+        if (maze[x][y] === 1) {
+            maze[x][y] = 0; // Remove barrier
+            drawRect({ x: x, y: y }, 0); // Update canvas
+        } else if (maze[x][y] === 0) {
+            maze[x][y] = 1; // Add barrier
+            drawRect({ x: x, y: y }, 1); // Update canvas
         }
-        startTimer();
-        solveMaze();
+
+        // Handle start and end points
+        if (start.x === -1) {
+            start = { x: x, y: y };
+            drawRect(start, 6);
+        } else if (end.x === -1) {
+            end = { x: x, y: y };
+            drawRect(end, 5);
+            prompt_play("Solving Maze. Enjoy ^_^");
+            if (isAniSolv) {
+                $("#skp-btn2").fadeIn("slow");
+            }
+            startTimer();
+            solveMaze();
+        }
     }
 }
 
@@ -549,14 +558,16 @@ function createMaze() {
 }
 
 function createCanvas(w, h) {
-	var canvas = document.createElement("canvas");
-	wid = w; hei = h;
-	canvas.width = wid; canvas.height = hei;
-	canvas.id = "canvas";
-	ctx = canvas.getContext("2d");
-	ctx.fillStyle = "black"; ctx.fillRect(0, 0, wid, hei);
-	var div = document.getElementById("maze")
-	div.appendChild(canvas);
+    var canvas = document.createElement("canvas");
+    wid = w; hei = h;
+    canvas.width = wid; canvas.height = hei;
+    canvas.id = "canvas";
+    ctx = canvas.getContext("2d");
+    ctx.fillStyle = "black"; ctx.fillRect(0, 0, wid, hei);
+    var div = document.getElementById("maze");
+    div.appendChild(canvas);
+    // Add event listener for mouse clicks
+    canvas.addEventListener("mousedown", getCursorPos, false);
 }
 
 function gameStart() {
