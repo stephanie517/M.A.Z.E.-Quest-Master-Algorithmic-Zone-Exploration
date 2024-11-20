@@ -71,13 +71,10 @@ function getCursorPos(event) {
 
     // Check if the user clicked on the maze
     if (maze[x][y] !== undefined) {
-        // Toggle barrier
+        // Toggle way block
         if (maze[x][y] === 1) {
-            maze[x][y] = 0; // Remove barrier
+            maze[x][y] = 0; // Add way block
             drawRect({ x: x, y: y }, 0); // Update canvas
-        } else if (maze[x][y] === 0) {
-            maze[x][y] = 1; // Add barrier
-            drawRect({ x: x, y: y }, 1); // Update canvas
         }
 
         // Handle start and end points
@@ -129,7 +126,7 @@ function displayLeaderboard() {
 // stack stores the visited addresses, stack_next stores the next possible positions
 // tmp stores the top element of the stack every time the function pops from the stack after the path search ends
 // game = 1 means the game is running, 0 means the game is over
-// solver represents the solving method: 0 : BFS search / 1 : A* search / 2 : BFS / 3 : DFS (original program)
+// solver represents the solving method: 0 : BFS search / 1 : A* search / 2 : BFS / 3 : DFS (original program) / 4 : Dijkstra
 function solverChange() {
     if (game) {
         prompt_settings("It's gaming! Please Change it after game!");
@@ -222,6 +219,21 @@ function drawRect(VAR, TO) {
 	}
 	ctx.fillRect(VAR.x * grid, VAR.y * grid, grid, grid);
 }
+const DIFFICULTY_SETTINGS = {
+    easy: { cols: 40, rows: 30 },
+    medium: { cols: 80, rows: 60 },
+    hard: { cols: 120, rows: 90 }
+};
+
+function setDifficultyLevel() {
+    const difficultySelect = document.getElementById('difficulty-select');
+    const selectedDifficulty = difficultySelect.value;
+    
+    cols = DIFFICULTY_SETTINGS[selectedDifficulty].cols;
+    rows = DIFFICULTY_SETTINGS[selectedDifficulty].rows;
+    
+    prompt_settings(`Difficulty set to: ${selectedDifficulty}`);
+}
 const algorithmExplanations = {
     "BFS": "Breadth-First Search (BFS) explores all possible paths level by level, ensuring the shortest path is found in an unweighted grid.",
     "A*": "A* Search uses heuristics to prioritize paths that seem closer to the goal, balancing speed and accuracy.",
@@ -229,7 +241,6 @@ const algorithmExplanations = {
     "DFS": "Depth-First Search (DFS) explores as far as possible along a branch before backtracking, which may not guarantee the shortest path.",
     "Dijkstra's": "Dijkstra's Algorithm systematically calculates the shortest path from the start to the goal using edge weights."
 };
-
 function showAlgorithmExplanation(algorithm) {
     const explanationModal = document.getElementById("algorithm-explanation-modal");
     const explanationText = document.getElementById("algorithm-explanation-text");
@@ -237,13 +248,10 @@ function showAlgorithmExplanation(algorithm) {
     explanationText.innerText = algorithmExplanations[algorithm] || "Explanation not available.";
     explanationModal.style.display = "block";
 }
-
 function closeModal() {
     const explanationModal = document.getElementById("algorithm-explanation-modal");
     explanationModal.style.display = "none";
 }
-
-// Call this function after the game ends
 function onGameEnd() {
     showAlgorithmExplanation(currentAlgorithm);
 }
@@ -506,10 +514,6 @@ function solveMaze() {
 
 // Bug: The fadeIn animation doesn't work properly when loading, and fadeOut doesn't take effect
 function scrollEvent(event) {
-	// Different browsers have different ways of getting the scroll position, it's a headache, no more backward compatibility
-	// From my testing, in the latest versions of IE, Chrome, and Firefox, document.body.scrollTop doesn't work, but document.documentElement.scrollTop is effective
-	// The commented-out lines are native JavaScript methods. Note that topNav = document.getElementById( "topNav" );
-	// event = event || window.event;
 	if (event.wheelDelta || event.detail) {
 		//console.log(document.documentElement.scrollTop);
 		if (document.documentElement.scrollTop > 550 && $("#topNav").is(":visible") == false)
@@ -605,7 +609,6 @@ function gameStart() {
     if (game)
         return;
     
-    // Reset timer state
     if (isTimerRunning) {
         clearInterval(timerInterval);
         isTimerRunning = false;
@@ -617,24 +620,35 @@ function gameStart() {
     $("#solver1").attr("disabled", true);
     $("#solver2").attr("disabled", true);
     $("#solver3").attr("disabled", true);
-    prompt_settings("You can change solver and maze size after game!");
+    prompt_settings("You can change solver and difficulty after game!");
     
-    if (cols % 2 == 0)--cols;
-    if (rows % 2 == 0)--rows;
+    // Ensure odd number of cols and rows for maze generation
+    if (cols % 2 == 0) --cols;
+    if (rows % 2 == 0) --rows;
+    
     var div = document.getElementById("maze");
     var canvas = document.getElementById("canvas");
     if (canvas)
         div.removeChild(canvas);
+    
     createCanvas(grid * cols, grid * rows);
     maze = createArray(cols, rows);
+    
+    // Randomize start point within the first half of the maze
     start.x = Math.floor(Math.random() * (cols / 2));
     start.y = Math.floor(Math.random() * (rows / 2));
-    if (!(start.x & 1)) start.x++; if (!(start.y & 1)) start.y++;
+    
+    // Ensure start coordinates are odd for maze generation
+    if (!(start.x & 1)) start.x++;
+    if (!(start.y & 1)) start.y++;
+    
     drawRect(start, 0);
     $("#rst-btn").fadeIn("slow");
     prompt_play("Creating Maze~");
+    
     if (isAniMaze)
         $("#skp-btn1").fadeIn("slow");
+    
     createMaze();
     drawMaze();
 }
@@ -700,6 +714,6 @@ function init() {
 	colorChange();
 	isAniSolv = true; isAniMaze = true;
 	document.addEventListener('DOMMouseScroll', scrollEvent, false);
-	// I wanted to be backward-compatible, but older browsers handle scrollTop differently. It's a mess, so I decided to ignore it
-	// window.onmousewheel = document.onmousewheel = scrollEvent;
+	document.getElementById('difficulty-select').value = 'medium';
+	setDifficultyLevel();
 }

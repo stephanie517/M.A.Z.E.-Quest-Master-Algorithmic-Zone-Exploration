@@ -29,7 +29,6 @@
             <div class="spacer"></div>
             <a id="start-game" href="#game" onclick="gameStart()">Start Game</a>
 
-            <!-- Create Username Section -->
             <div id="create-username">
                 <input type="text" id="username-input" placeholder="Enter Username" class="textInput"/>
                 <button id="create-username-btn" onclick="createUsername()">Create Username</button>
@@ -79,17 +78,18 @@
             <div class="spacer"></div>
             <h2 style="color: #E93F51;">Settings</h2>
             <p>
-                Row <input id="inRow" type="text" class="textInput" /> 
-                Col <input id="inCol" type="text" class="textInput" />
-                <button id="cfm-btn" onclick="confirm()">
-                    Confirm
-                </button>
+                <strong>Difficulty:</strong>
+                <select id="difficulty-select" class="textInput">
+                    <option value="easy">Easy (40x30)</option>
+                    <option value="medium" selected>Medium (80x60)</option>
+                    <option value="hard">Hard (120x90)</option>
+                </select>
                 <a href="#game">
                     <button id="str-btn" onclick="gameStart()">
                         Start Game
                     </button>
                 </a>
-            </p> 
+            </p>  
             <p id="solverSelect">
                 <strong>Solver:</strong> &nbsp;&nbsp;&nbsp;
                 BFS <input id="solver0" value="0" type="radio" name="solvers" onclick="solverChange()" /> &nbsp;
