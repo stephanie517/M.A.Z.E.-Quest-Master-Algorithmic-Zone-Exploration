@@ -2,6 +2,10 @@ var ctx, wid, hei, cols, rows, maze, stack = [], stack_next = [], stack_wfs = []
 var game = 0, solver = 0, minRow = 10, minCol = 10, maxRow = 160, maxCol = 160, isAniSolv = true, isAniMaze = true;
 var colorIdx = 0, solverIdx = 0, colors;
 
+let stepsTaken = [];
+let pathLength = 0; 
+let timeComplexity = "";
+
 colors = [
 	["#FFB1A7", "#EEFFFF", "#FA9A71", "#FF7777", "#FFDDAA", "#FF7777", "#FF7777"],
 	["#EEFFFF", "#FFDDAA", "#FA9A71", "#FF7777", "#FFB1A7", "#FF7777", "#FF7777"],
@@ -75,6 +79,9 @@ function getCursorPos(event) {
         if (maze[x][y] === 1) {
             maze[x][y] = 0; // Add way block
             drawRect({ x: x, y: y }, 0); // Update canvas
+        } else if (maze[x][y] === 0) {
+            maze[x][y] = 1; // Add barrier
+            drawRect({ x: x, y: y }, 1); // Update canvas
         }
 
         // Handle start and end points
@@ -159,11 +166,21 @@ function skip2() {
 function iniGame() {
 	stack = []; stack_next = []; stack_wfs = [];
 	begin = { x: -1, y: -1 }; start = { x: -1, y: -1 }; end = { x: -1, y: -1 };
+	stepsTaken = [];
+	timeComplexity = "";
 }
 function gameOver() {
     if (isTimerRunning) {
         const finalTime = stopTimer();
         prompt_play(`Maze completed in ${finalTime.toFixed(2)} seconds!`);
+
+	// Create a message with the analysis
+        let analysisMessage = `Algorithm: ${currentAlgorithm}\n`;
+        analysisMessage += `Steps taken: ${stepsTaken.length}\n`;
+        analysisMessage += `Path Length: ${pathLength}\n`;
+        analysisMessage += `Time Complexity: ${timeComplexity}\n`;
+        
+        alert(analysisMessage); // Show the analysis in a pop-up
     }
     
     iniGame();
@@ -245,7 +262,15 @@ function showAlgorithmExplanation(algorithm) {
     const explanationModal = document.getElementById("algorithm-explanation-modal");
     const explanationText = document.getElementById("algorithm-explanation-text");
     
-    explanationText.innerText = algorithmExplanations[algorithm] || "Explanation not available.";
+    // Prepare the explanation text
+    let explanation = algorithmExplanations[algorithm] || "Explanation not available.";
+    
+    // Add analysis information
+    explanation += `\n\nSteps taken: ${stepsTaken.length}`;
+    explanation += `\nPath Length: ${pathLength}`;
+    explanation += `\nTime Complexity: ${timeComplexity}`;
+    
+    explanationText.innerText = explanation;
     explanationModal.style.display = "block";
 }
 function closeModal() {
@@ -288,24 +313,22 @@ function getFNeighbours(n, sx, sy, a) {
 	return n;
 }
 function drawPath() {
-	if (start.x == -1)
-		return;
-	// Rendering acceleration: only render the main path of the pathfinding process
-	do {
-		tmp = stack.pop();
-		if (isNext(tmp, start)) {
-			if (maze[tmp.x][tmp.y] == 2)
-				drawRect(tmp, 3);
-			start = tmp;
-			break;
-		}
-		if (maze[tmp.x][tmp.y] == 2)
-			drawRect(tmp, 4);
-	} while (stack.length && !isNext(tmp, start))
-	if (stack.length < 1) {
-		gameOver();
-		return;
-	}
+    if (start.x == -1) return;
+    do {
+        tmp = stack.pop();
+        stepsTaken.push({ x: tmp.x, y: tmp.y }); // Track the step taken
+        pathLength++; // Increment path length
+        if (isNext(tmp, start)) {
+            if (maze[tmp.x][tmp.y] == 2) drawRect(tmp, 3);
+            start = tmp;
+            break;
+        }
+        if (maze[tmp.x][tmp.y] == 2) drawRect(tmp, 4);
+    } while (stack.length && !isNext(tmp, start))
+    if (stack.length < 1) {
+        gameOver();
+        return;
+    }
 }
 function BFS_Astar() {
 	if (start.x == -1)
@@ -501,17 +524,34 @@ function Dijkstra() {
 }
 
 function solveMaze() {
-	if (start.x == -1)
-		return;
-	switch (solverIdx) {
-		case 0: BFS_Astar(); break;
-		case 1: BFS_Astar(); break;
-		case 2: stack_next.push(start); WFS(); break;
-		case 3: DFS(); break;
-		case 4: Dijkstra(); break;
-	}
+    if (start.x == -1 || end.x == -1) return; // Ensure both points are set
+    stepsTaken = []; // Reset steps for each solve
+    pathLength = 0; // Reset path length
+    pathCoordinates = []; // Reset path coordinates
+    switch (solverIdx) {
+        case 0: 
+            timeComplexity = "O(V + E)"; // BFS
+            BFS_Astar(); 
+            break;
+        case 1: 
+            timeComplexity = "O(V + E)"; // A*
+            BFS_Astar(); 
+            break;
+        case 2: 
+            timeComplexity = "O(V + E)"; // WFS
+            stack_next.push(start); 
+            WFS(); 
+            break;
+        case 3: 
+            timeComplexity = "O(V + E)"; // DFS
+            DFS(); 
+            break;
+        case 4: 
+            timeComplexity = "O(E log V)"; // Dijkstra
+            Dijkstra(); 
+            break;
+    }
 }
-
 // Bug: The fadeIn animation doesn't work properly when loading, and fadeOut doesn't take effect
 function scrollEvent(event) {
 	if (event.wheelDelta || event.detail) {
