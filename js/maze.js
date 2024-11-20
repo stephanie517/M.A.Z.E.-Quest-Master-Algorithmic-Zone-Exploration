@@ -176,6 +176,8 @@ function gameOver() {
     $("#solver1").attr("disabled", false);
     $("#solver2").attr("disabled", false);
     $("#solver3").attr("disabled", false);
+
+	onGameEnd();
 }
 function prompt_settings(message) {
 	// Use jQuery method to modify the content of the <p> tag, the following is the native JS method
@@ -219,6 +221,31 @@ function drawRect(VAR, TO) {
 		case 6: ctx.fillStyle = colors[colorIdx][6]; break;   // End point
 	}
 	ctx.fillRect(VAR.x * grid, VAR.y * grid, grid, grid);
+}
+const algorithmExplanations = {
+    "BFS": "Breadth-First Search (BFS) explores all possible paths level by level, ensuring the shortest path is found in an unweighted grid.",
+    "A*": "A* Search uses heuristics to prioritize paths that seem closer to the goal, balancing speed and accuracy.",
+    "WFS": "Wavefront Search propagates outward like BFS but can be optimized for specific scenarios.",
+    "DFS": "Depth-First Search (DFS) explores as far as possible along a branch before backtracking, which may not guarantee the shortest path.",
+    "Dijkstra's": "Dijkstra's Algorithm systematically calculates the shortest path from the start to the goal using edge weights."
+};
+
+function showAlgorithmExplanation(algorithm) {
+    const explanationModal = document.getElementById("algorithm-explanation-modal");
+    const explanationText = document.getElementById("algorithm-explanation-text");
+    
+    explanationText.innerText = algorithmExplanations[algorithm] || "Explanation not available.";
+    explanationModal.style.display = "block";
+}
+
+function closeModal() {
+    const explanationModal = document.getElementById("algorithm-explanation-modal");
+    explanationModal.style.display = "none";
+}
+
+// Call this function after the game ends
+function onGameEnd() {
+    showAlgorithmExplanation(currentAlgorithm);
 }
 
 function drawMaze() {
