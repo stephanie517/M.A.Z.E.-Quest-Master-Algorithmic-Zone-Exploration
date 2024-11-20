@@ -23,6 +23,8 @@ function createUsername() {
 let startTime, endTime, timerInterval;
 let isTimerRunning = false;
 let leaderboard = [];
+let currentAlgorithm = "BFS";
+const algorithms = ["BFS", "A*", "WFS", "DFS", "Dijkstra's"];
 
 // Add timer display element update function
 function updateTimerDisplay() {
@@ -96,7 +98,7 @@ function getCursorPos(event) {
 }
 
 function updateLeaderboard(username, time) {
-    leaderboard.push({ username: username, time: time });
+    leaderboard.push({ username: username, time: time, algorithm: currentAlgorithm });
     leaderboard.sort((a, b) => a.time - b.time);
 
     // Limit leaderboard to top 10 entries
@@ -118,6 +120,7 @@ function displayLeaderboard() {
             <td>${index + 1}</td>
             <td>${entry.username}</td>
             <td>${entry.time.toFixed(2)}</td>
+			<td>${entry.algorithm}</td>
         `;
         leaderboardEntries.appendChild(row);
     });
@@ -128,11 +131,12 @@ function displayLeaderboard() {
 // game = 1 means the game is running, 0 means the game is over
 // solver represents the solving method: 0 : BFS search / 1 : A* search / 2 : BFS / 3 : DFS (original program)
 function solverChange() {
-	if (game) {
-		prompt_settings("It's gaming! Please Change it after game!");
-		return;
-	}
-	solverIdx = parseInt( $("input[name='solvers']:checked").val() );
+    if (game) {
+        prompt_settings("It's gaming! Please Change it after game!");
+        return;
+    }
+    solverIdx = parseInt($("input[name='solvers']:checked").val());
+    currentAlgorithm = algorithms[solverIdx];
 }
 
 function colorChange() {
