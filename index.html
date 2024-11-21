@@ -15,6 +15,14 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        .pixelated {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 24px; /* Adjust size as needed */
+            letter-spacing: 1px; /* Optional: Adjust spacing */
+        }
+    </style>
   </head>
   <body>
     <header>
@@ -25,7 +33,7 @@
           <li><a href="#education">About</a></li>
           <li><a href="#projects">Settings</a></li>
           <li><a href="#leaderboard">Leaderboard</a></li>
-          <li><a href="#projects">Play</a></li>
+          <li><a href="#play">Play</a></li>
           <li><a href="#testimonials">About Us</a></li>
         </ul>
       <div class="menu">
@@ -145,6 +153,28 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+      <section id="play" class="play">
+        <div class="container">
+          <h2 class="pixelated" onclick="gameStart()" style="cursor: pointer;">
+            Let's Game!
+          </h2>
+            <div class="mode-selection">
+                <p>
+                    <strong>Mode:</strong> &nbsp;&nbsp;&nbsp;
+                    <select id="modeSelect" onchange="modeChange()">
+                        <option value="light" selected>Light Mode</option>
+                        <option value="night">Night Mode</option>
+                    </select>
+                </p>
+            </div>
+            <div class="timer">
+                <p>Timer: <span id="timer">00:00</span></p>
+            </div>
+            <div class="cta-buttons">
+                <a href="#" class="btn primary">Play Now</a>
           </div>
         </div>
       </section>
