@@ -515,3 +515,76 @@ border: 1px solid var(--glass-border);
 border-radius: 20px;
 z-index: 1000;
 }
+
+.play {
+  padding: 6rem 0;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  text-align: center;
+}
+
+.play h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.pixelated {
+  font-size: 24px; /* Adjust size as needed */
+  color: #000000; /* Base color for the text (blue-green) */
+  text-shadow: 
+      0 0 5px #00ffcc,  /* Glow effect */
+      0 0 10px #00ffcc, /* Glow effect */
+      0 0 15px #00cc99, /* Slightly darker glow for depth */
+      0 0 20px #00cc99; /* Slightly darker glow for depth */
+  letter-spacing: 1px; /* Optional: Adjust spacing */
+  font-family: monospace; /* Use a monospace font for a pixelated effect */
+}
+
+.mode-selection {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.mode-options {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Space between options */
+}
+
+.mode-option {
+  cursor: pointer;
+  padding: 15px 30px;
+  border: 2px solid transparent; /* Default border */
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
+  color: #fff; /* Text color */
+  font-size: 18px; /* Font size */
+  transition: all 0.3s ease;
+}
+
+.mode-option:hover {
+  background-color: rgba(255, 255, 255, 0.3); /* Hover background */
+  border-color: #00ffcc; /* Border color on hover */
+}
+
+.mode-option.active {
+  background-color: #00ffcc; /* Background color for selected option */
+  color: #000; /* Text color for selected option */
+  font-weight: bold; /* Bold text for selected option */
+}
+
+.timer {
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+#timer {
+  font-weight: bold;
+  color: var(--accent);
+}
