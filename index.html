@@ -122,6 +122,23 @@
         <div class="spacer"></div>
     </div>
 
+    <div id="leaderboard" class="leaderboard-container">
+      <h2 class="leaderboard-title">Leaderboard</h2>
+      <table class="leaderboard-table">
+          <thead>
+              <tr>
+                  <th>Rank</th>
+                  <th>Username</th>
+                  <th>Time (seconds)</th>
+                  <th>Algorithm</th>
+              </tr>
+          </thead>
+          <tbody id="leaderboard-entries">
+              <!-- Rows will be populated here by JavaScript -->
+          </tbody>
+      </table>
+  </div>
+
       <section id="play" class="play">
     <div class="container">
         <h2 class="pixelated" onclick="gameStart()" style="cursor: pointer;">
@@ -159,22 +176,6 @@
     </div>
 </section>
 
-      <div id="leaderboard" class="leaderboard-container">
-        <h2 class="leaderboard-title">Leaderboard</h2>
-        <table class="leaderboard-table">
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Username</th>
-                    <th>Time (seconds)</th>
-                    <th>Algorithm</th>
-                </tr>
-            </thead>
-            <tbody id="leaderboard-entries">
-                <!-- Rows will be populated here by JavaScript -->
-            </tbody>
-        </table>
-    </div>
 
       <section id="testimonials" class="testimonials">
         <div class="container">
