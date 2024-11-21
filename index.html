@@ -15,17 +15,25 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        .pixelated {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 24px; /* Adjust size as needed */
+            letter-spacing: 1px; /* Optional: Adjust spacing */
+        }
+    </style>
   </head>
-  <body>
+  <body onload="init()">
     <header>
       <nav>
         <div class="logo">MAZE Quest</div>
         <ul>
           <li><a href="#home">Home</a></li>
           <li><a href="#education">About</a></li>
-          <li><a href="#projects">Settings</a></li>
+          <li><a href="#settings">Settings</a></li>
           <li><a href="#leaderboard">Leaderboard</a></li>
-          <li><a href="#projects">Play</a></li>
+          <li><a href="#play">Play</a></li>
           <li><a href="#testimonials">About Us</a></li>
         </ul>
       <div class="menu">
@@ -74,73 +82,82 @@
         </div>
       </section>
 
-      <section id="projects" class="projects">
-        <div class="container">
-          <h2>Recent Projects</h2>
-          <div class="project-grid">
-            <div class="project-card">
-              <img
-                src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&h=300&fit=crop"
-                alt="E-commerce Website"
-              />
-              <div class="project-content">
-                <h3>E-commerce Website</h3>
-                <p>
-                  A fully responsive e-commerce platform with modern design and
-                  smooth animations. Features include product filtering, cart
-                  management, and checkout process.
-                </p>
-                <div class="project-tech">
-                  <span class="tech-tag">HTML5</span>
-                  <span class="tech-tag">CSS3</span>
-                  <span class="tech-tag">Responsive</span>
-                  <span class="tech-tag">Grid Layout</span>
+      <div id="settings">
+        <div class="spacer"></div>
+        <h2 style="color: #E93F51;">Settings</h2>
+        <p>
+            <strong>Difficulty:</strong>
+            <select id="difficulty-select" class="textInput">
+                <option value="easy">Easy (40x30)</option>
+                <option value="medium" selected>Medium (80x60)</option>
+                <option value="hard">Hard (120x90)</option>
+            </select>
+            <a href="#game">
+                <button id="str-btn" onclick="gameStart()">
+                    Start Game
+                </button>
+            </a>
+        </p>  
+        <p id="solverSelect">
+          <strong>Solver:</strong> &nbsp;&nbsp;&nbsp;
+          <input id="solver0" value="0" type="radio" name="solvers" onclick="solverChange()" />
+          <label for="solver0">BFS</label>
+          <input id="solver1" value="1" type="radio" name="solvers" onclick="solverChange()" />
+          <label for="solver1">A*</label>
+          <input id="solver2" value="2" type="radio" name="solvers" onclick="solverChange()" />
+          <label for="solver2">WFS</label>
+          <input id="solver3" value="3" type="radio" name="solvers" onclick="solverChange()" />
+          <label for="solver3">DFS</label>
+          <input id="solver4" value="4" type="radio" name="solvers" onclick="solverChange()" />
+          <label for="solver4">Dijkstra's</label>
+      </p>
+        <p>
+            Show drawing animation 
+            <input id="inAniMaze" type="checkbox" class="checkInput" onclick="checkChange()" />
+            <br/>
+            Show solving animation 
+            <input id="inAniSolv" type="checkbox" class="checkInput" onclick="checkChange()" />
+        </p> 
+        <p id="hint_settings" onclick="$(this).fadeOut('slow')"> </p>
+        <div class="spacer"></div>
+    </div>
+
+      <section id="play" class="play">
+    <div class="container">
+        <h2 class="pixelated" onclick="gameStart()" style="cursor: pointer;">
+            Let's Game!
+        </h2>
+        <div class="mode-selection">
+            <p>
+                <strong>Mode:</strong>
+            </p>
+            <div class="mode-options">
+                <div class="mode-option" onclick="setMode('light')" id="lightMode">
+                    Light Mode
                 </div>
-              </div>
-            </div>
-            <div class="project-card">
-              <img
-                src="https://images.unsplash.com/photo-1555421689-491a97ff2040?w=400&h=300&fit=crop"
-                alt="Portfolio Template"
-              />
-              <div class="project-content">
-                <h3>Portfolio Template</h3>
-                <p>
-                  A clean and modern portfolio template with smooth scrolling,
-                  animations, and contact form. Perfect for creative
-                  professionals.
-                </p>
-                <div class="project-tech">
-                  <span class="tech-tag">HTML5</span>
-                  <span class="tech-tag">CSS3</span>
-                  <span class="tech-tag">Flexbox</span>
-                  <span class="tech-tag">Animations</span>
+                <div class="mode-option" onclick="setMode('night')" id="nightMode">
+                    Night Mode
                 </div>
-              </div>
             </div>
-            <div class="project-card">
-              <img
-                src="https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=500&h=300&fit=crop"
-                alt="Restaurant Website"
-              />
-              <div class="project-content">
-                <h3>Restaurant Website</h3>
-                <p>
-                  An elegant website for a local restaurant featuring menu
-                  displays, reservation system, and location information with
-                  maps integration.
-                </p>
-                <div class="project-tech">
-                  <span class="tech-tag">HTML5</span>
-                  <span class="tech-tag">CSS3</span>
-                  <span class="tech-tag">Grid</span>
-                  <span class="tech-tag">Forms</span>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </section>
+        <div class="timer">
+            <p>Timer: <span id="timer">00:00</span></p>
+        </div>
+        <div class="cta-buttons">
+            <a href="#" class="btn primary">Play Now</a>
+        </div>
+        <div id="algorithm-explanation-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal()">&times;</span>
+                <h2>Algorithm Explanation</h2>
+                <p id="algorithm-explanation-text"></p>
+            </div>
+        </div>
+        <div id="maze"></div>
+        <p id="hint_play" onclick="$(this).fadeOut('slow')"> </p>
+        <div class="spacer" id="btm"></div>
+    </div>
+</section>
 
       <div id="leaderboard" class="leaderboard-container">
         <h2 class="leaderboard-title">Leaderboard</h2>
