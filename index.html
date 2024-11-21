@@ -130,27 +130,41 @@
     </div>
 
       <section id="play" class="play">
-        <div class="container">
-          <h2 class="pixelated" onclick="gameStart()" style="cursor: pointer;">
+    <div class="container">
+        <h2 class="pixelated" onclick="gameStart()" style="cursor: pointer;">
             Let's Game!
-          </h2>
-            <div class="mode-selection">
-                <p>
-                    <strong>Mode:</strong> &nbsp;&nbsp;&nbsp;
-                    <select id="modeSelect" onchange="modeChange()">
-                        <option value="light" selected>Light Mode</option>
-                        <option value="night">Night Mode</option>
-                    </select>
-                </p>
+        </h2>
+        <div class="mode-selection">
+            <p>
+                <strong>Mode:</strong>
+            </p>
+            <div class="mode-options">
+                <div class="mode-option" onclick="setMode('light')" id="lightMode">
+                    Light Mode
+                </div>
+                <div class="mode-option" onclick="setMode('night')" id="nightMode">
+                    Night Mode
+                </div>
             </div>
-            <div class="timer">
-                <p>Timer: <span id="timer">00:00</span></p>
-            </div>
-            <div class="cta-buttons">
-                <a href="#" class="btn primary">Play Now</a>
-          </div>
         </div>
-      </section>
+        <div class="timer">
+            <p>Timer: <span id="timer">00:00</span></p>
+        </div>
+        <div class="cta-buttons">
+            <a href="#" class="btn primary">Play Now</a>
+        </div>
+        <div id="algorithm-explanation-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal()">&times;</span>
+                <h2>Algorithm Explanation</h2>
+                <p id="algorithm-explanation-text"></p>
+            </div>
+        </div>
+        <div id="maze"></div>
+        <p id="hint_play" onclick="$(this).fadeOut('slow')"> </p>
+        <div class="spacer" id="btm"></div>
+    </div>
+</section>
 
       <section id="testimonials" class="testimonials">
         <div class="container">
