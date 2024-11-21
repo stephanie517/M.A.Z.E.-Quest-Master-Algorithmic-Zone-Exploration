@@ -280,62 +280,145 @@ nav a:hover {
   margin-bottom: 0.5rem;
   opacity: 0.8;
 }
-/* recent projects section */
 
-.project-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+#settings {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(0,0,0,0.6));
 }
-.project-card {
-  background: var(--glass-bg);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: var(--transition);
-  border: 1px solid var(--glass-border);
-  position: relative;
-}
-.project-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-5px);
-}
-.project-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  transition: var(--transition);
-}
-.project-card:hover img {
-  transform: scale(1.05);
-}
-.project-content {
-  padding: 1.5rem;
-}
-.project-content h3 {
-  margin-bottom: 0.5rem;
+
+#settings h2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0 50px;
   color: var(--accent);
+  text-shadow: 0 0 10px rgba(233, 63, 81, 0.5);
 }
-.project-content p {
+
+#settings p {
+  color: var(--text-primary);
+  transition: var(--transition);
+  font-size: 22px;
+  letter-spacing: 1px;
   margin-bottom: 1rem;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
 }
-.project-tech {
+
+/* Solver Selection Styling */
+#solverSelect {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 1rem;
   margin-bottom: 1rem;
 }
-.tech-tag {
-  background: rgba(100, 255, 218, 0.1);
+
+#solverSelect input[type="radio"] {
+  display: none;
+}
+
+#solverSelect label {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+#solverSelect label:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+
+#solverSelect input[type="radio"]:checked + label {
+  background: rgba(233, 63, 81, 0.2);
+  border-color: var(--accent);
   color: var(--accent);
-  padding: 0.3rem 0.8rem;
-  border-radius: 1.3rem;
-  font-size: 0.85rem;
+}
+
+/* Difficulty Select Styling */
+.textInput {
+  color: var(--text-primary);
+  font-family: 'Press Start 2P', sans-serif;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  font-size: 20px;
+  width: 250px;
+  padding: 0.5rem;
   transition: var(--transition);
 }
-.project-card:hover .tech-tag {
-  background: rgba(100, 255, 218, 0.2);
+
+.textInput:hover {
+  border-color: var(--accent);
+}
+
+/* Start Game Button */
+#str-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-family: 'Press Start 2P', sans-serif;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-left: 1rem;
+}
+
+#str-btn:hover {
+  background: rgba(233, 63, 81, 0.8);
+  transform: translateY(-3px);
+}
+
+/* Checkbox Styling */
+.checkInput {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition);
+}
+
+.checkInput:checked {
+  background: var(--accent);
+}
+
+.checkInput:checked::after {
+  content: '✔';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+/* Hint Settings */
+#hint_settings {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+#hint_settings:hover {
+  border-color: var(--accent);
+  color: var(--text-secondary);
 }
 
 /* testimonials section */
