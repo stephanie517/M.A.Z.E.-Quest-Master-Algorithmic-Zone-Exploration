@@ -115,7 +115,7 @@
         <div class="spacer"></div>
       </section>
 
-    <section id="leaderboard" class="leaderboard-container">
+    <div id="leaderboard" class="leaderboard-container">
       <h2 class="leaderboard-title">Leaderboard</h2>
       <table class="leaderboard-table">
           <thead>
@@ -130,18 +130,7 @@
               <!-- Rows will be populated here by JavaScript -->
           </tbody>
       </table>
-    </section>
-
-  <section id="play">
-    <h2 onclick="gameStart()">Let's Game!</h2>
-    <div id="timer-display" class="timer">Time: 0.00s</div>
-    <div id="maze">Maze will be rendered here.</div>
-
-    <div class="button-group">
-        <button id="rst-btn" onclick="gameRestart()">Restart</button>
-        <button id="skp-btn1" onclick="skip1()">Skip Creating</button>
-        <button id="skp-btn2" onclick="skip2()">Skip Solving</button>
-    </div>
+  </div>
 
     <p>
         <strong>Theme:</strong>&nbsp;&nbsp;&nbsp;
@@ -161,6 +150,7 @@
 
     <p id="hint_play" onclick="$(this).fadeOut('slow')">Click here to hide this hint.</p>
 </section>
+
 
       <section id="testimonials" class="testimonials">
         <div class="container">
