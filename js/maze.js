@@ -238,8 +238,8 @@ function drawRect(VAR, TO) {
 }
 const DIFFICULTY_SETTINGS = {
     easy: { cols: 40, rows: 30 },
-    medium: { cols: 80, rows: 60 },
-    hard: { cols: 120, rows: 90 }
+    medium: { cols: 70, rows: 50 },
+    hard: { cols: 90, rows: 70 }
 };
 
 function setDifficultyLevel() {
@@ -662,10 +662,8 @@ function gameStart() {
     $("#solver3").attr("disabled", true);
     prompt_settings("You can change solver and difficulty after game!");
     
-    // Ensure odd number of cols and rows for maze generation
-    if (cols % 2 == 0) --cols;
-    if (rows % 2 == 0) --rows;
-    
+    const mazeContainer = document.getElementById("maze");
+    mazeContainer.innerHTML = "";
     var div = document.getElementById("maze");
     var canvas = document.getElementById("canvas");
     if (canvas)
@@ -701,31 +699,6 @@ function gameRestart() {
 	gameStart();
 }
 
-function confirm() {
-	// Do not change settings while the game is running
-	if (game) {
-		prompt_settings("It's gaming, please change it after game!!");
-		return;
-	}
-	var inRow = parseInt(document.getElementById("inRow").value);
-	var inCol = parseInt(document.getElementById("inCol").value);
-	// Check if the input values are integers
-	var isInt = Number.isInteger(inRow) && Number.isInteger(inCol);
-	// Reject non-integer inputs and display a message
-	if (!isInt) {
-		prompt_settings("Please Input TWO Numbers!!!");
-		return;
-	}
-	var isOverflow = (inRow < minRow) || (inCol < minCol) || (inRow > maxRow) || (inCol > maxCol);
-	// Display a message if the input exceeds the allowed range
-	if (isOverflow)
-		prompt_settings("Your input is TOO BIG/SMALL. We replaced it with boundary limits");
-	else
-		prompt_settings("Done!");
-	cols = Math.min(Math.max(inCol, minCol), maxCol);
-	rows = Math.min(Math.max(inRow, minRow), maxRow);
-}
-
 function checkChange() {
 	if (!game) {
 		prompt_settings("Setting done!");
@@ -755,5 +728,6 @@ function init() {
 	isAniSolv = true; isAniMaze = true;
 	document.addEventListener('DOMMouseScroll', scrollEvent, false);
 	document.getElementById('difficulty-select').value = 'medium';
+	document.getElementById('difficulty-select').addEventListener('change', setDifficultyLevel);
 	setDifficultyLevel();
 }

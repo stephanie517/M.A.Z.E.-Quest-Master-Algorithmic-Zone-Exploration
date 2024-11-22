@@ -84,8 +84,8 @@ h2 {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
 }
-/* Navigation section and header section */
 
+/* Navigation section and header section */
 header {
   position: fixed;
   top: 0;
@@ -146,12 +146,12 @@ nav a:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(10, 10, 10, 0.7); /* Dark overlay to ensure text readability */
+  background: rgba(10, 10, 10, 0.7);
   z-index: 0;
 }
 
 .hero .container {
-  position: relative; /* Ensure content is above the overlay */
+  position: relative;
   z-index: 1;
   display: flex;
   justify-content: space-around;
@@ -210,28 +210,27 @@ nav a:hover {
   filter: grayscale(0);
 }
 
-/* General styles for the timeline section */
-/* General styles for the timeline section */
+/* timeline section */
 .timeline {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Create two columns for the timeline items */
-  gap: 3rem;  /* Space between the items */
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
   max-width: 1000px;
   margin: 0 auto;
-  padding: 4rem 2rem;  /* Adequate padding for clarity */
-  position: relative;  /* Make sure the green line is positioned relative to the container */
+  padding: 4rem 2rem;
+  position: relative;
 }
 
 .timeline::before {
   content: "";
   position: absolute;
-  width: 4px;  /* Thicker line to stand out */
-  height: calc(100% - 8rem);  /* Adjust height to match padding and ensure it doesn’t go off the container */
+  width: 4px;  
+  height: calc(100% - 8rem);
   background: var(--accent);
   left: 50%;
   transform: translateX(-50%);
   opacity: 0.3;
-  z-index: -1;  /* Ensure line is behind content */
+  z-index: -1;
 }
 
 .timeline-item {
@@ -243,7 +242,7 @@ nav a:hover {
 
 .timeline-content {
   background: var(--glass-bg);
-  padding: 2rem 2.5rem;  /* Increased padding for better balance */
+  padding: 2rem 2.5rem;
   border-radius: 12px;
   border: 2px solid var(--glass-border);
   position: relative;
@@ -258,7 +257,7 @@ nav a:hover {
 .timeline-content:hover {
   transform: translateY(-10px);
   background: rgba(100, 255, 218, 0.1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);  /* More prominent shadow on hover */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
 .timeline-content::before {
@@ -269,14 +268,14 @@ nav a:hover {
   background: var(--accent);
   border-radius: 50%;
   top: 50%;
-  left: -10px;  /* Align dot to the left of the content */
+  left: -10px;
   transform: translateY(-50%);
   box-shadow: 0 0 15px var(--accent);
 }
 
 .timeline-item:nth-child(even) .timeline-content::before {
   left: auto;
-  right: -10px;  /* For the second item, place dot on the right */
+  right: -10px;
 }
 
 .timeline-content h3 {
@@ -284,7 +283,7 @@ nav a:hover {
   font-size: 1.6rem;
   margin-bottom: 1rem;
   font-weight: bold;
-  text-align: center;  /* Centered heading for more balance */
+  text-align: center;
 }
 
 .timeline-content p {
@@ -292,7 +291,7 @@ nav a:hover {
   font-size: 1.2rem;
   line-height: 1.6;
   margin-bottom: 1.2rem;
-  text-align: center;  /* Centered paragraph for symmetry */
+  text-align: center;
 }
 
 .timeline-date {
@@ -412,7 +411,6 @@ nav a:hover {
   }
 }
 
-/* Solver Selection Styling */
 #solverSelect {
   display: flex;
   flex-wrap: wrap;
@@ -483,7 +481,6 @@ nav a:hover {
   transform: translateY(-3px);
 }
 
-/* Checkbox Styling */
 .checkInput {
   appearance: none;
   width: 20px;
@@ -509,7 +506,6 @@ nav a:hover {
   color: white;
 }
 
-/* Hint Settings */
 #hint_settings {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
@@ -522,6 +518,149 @@ nav a:hover {
 #hint_settings:hover {
   border-color: var(--accent);
   color: var(--text-secondary);
+}
+
+/* play section */
+#play {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px var(--glass-border);
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  transition: var(--transition);
+  gap: 20px; /* Adds spacing between elements */
+}
+
+.spacer {
+  height: 10px;
+}
+
+#play h2 {
+  font-size: 2rem;
+  color: var(--accent);
+  cursor: pointer;
+  margin-bottom: 10px;
+  text-align: center;
+  transition: transform var(--transition), color var(--transition);
+}
+
+#play h2:hover {
+  transform: scale(1.1);
+  color: var(--text-secondary);
+}
+
+#maze {
+  width: 90%;
+  max-width: 730px;
+  height: 570px;
+  background: var(--gradient-1);
+  border: 2px solid var(--accent);
+  border-radius: 5px;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#timer-display {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent);
+  text-align: center;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background: var(--glass-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+  transition: var(--transition);
+}
+
+button:hover {
+  background: var(--bg-secondary);
+  color: var(--accent);
+}
+
+p {
+  font-size: 1rem;
+  margin: 10px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+input[type="radio"] {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--bg-secondary);
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--glass-border);
+  color: var(--text-primary);
+  width: 80%;
+  box-shadow: 0 4px 6px var(--glass-border);
+}
+
+.close-button {
+  color: var(--text-secondary);
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+#hint_play {
+  font-size: 1rem;
+  text-align: center;
+  color: var(--accent);
+  cursor: pointer;
+  margin-top: 10px;
+  transition: opacity var(--transition);
+}
+
+#hint_play:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+#btm {
+  height: 30px;
 }
 
 /* testimonials section */
@@ -700,84 +839,4 @@ backdrop-filter: blur(10px);
 border: 1px solid var(--glass-border);
 border-radius: 20px;
 z-index: 1000;
-}
-
-.play {
-  padding: 6rem 0;
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  text-align: center;
-}
-
-.play h2 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-}
-
-.pixelated {
-  font-size: 24px; /* Adjust size as needed */
-  color: #000000; /* Base color for the text (blue-green) */
-  text-shadow: 
-      0 0 5px #00ffcc,  /* Glow effect */
-      0 0 10px #00ffcc, /* Glow effect */
-      0 0 15px #00cc99, /* Slightly darker glow for depth */
-      0 0 20px #00cc99; /* Slightly darker glow for depth */
-  letter-spacing: 1px; /* Optional: Adjust spacing */
-  font-family: monospace; /* Use a monospace font for a pixelated effect */
-}
-
-.mode-selection {
-  margin: 20px 0;
-  text-align: center;
-}
-
-.mode-options {
-  display: flex;
-  justify-content: center;
-  gap: 20px; /* Space between options */
-}
-
-.mode-option {
-  cursor: pointer;
-  padding: 15px 30px;
-  border: 2px solid transparent; /* Default border */
-  border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent background */
-  color: #fff; /* Text color */
-  font-size: 18px; /* Font size */
-  transition: all 0.3s ease;
-}
-
-.mode-option:hover {
-  background-color: rgba(255, 255, 255, 0.3); /* Hover background */
-  border-color: #00ffcc; /* Border color on hover */
-}
-
-.mode-option.active {
-  background-color: #00ffcc; /* Background color for selected option */
-  color: #000; /* Text color for selected option */
-  font-weight: bold; /* Bold text for selected option */
-}
-
-.timer {
-  margin-bottom: 2rem;
-  font-size: 1.2rem;
-}
-
-.cta-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-
-#timer {
-  font-weight: bold;
-  color: var(--accent);
-}
-
-#maze {
-    width: 100%;
-    height: 400px;
-    border: 1px solid #fff;
-    margin: 0 auto;
 }

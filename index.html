@@ -16,13 +16,6 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     />
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <style>
-        .pixelated {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 24px; /* Adjust size as needed */
-            letter-spacing: 1px; /* Optional: Adjust spacing */
-        }
-    </style>
   </head>
   <body onload="init()">
     <header>
@@ -30,7 +23,7 @@
         <div class="logo">MAZE Quest</div>
         <ul>
           <li><a href="#home">Home</a></li>
-          <li><a href="#education">About</a></li>
+          <li><a href="#about">About</a></li>
           <li><a href="#settings">Settings</a></li>
           <li><a href="#leaderboard">Leaderboard</a></li>
           <li><a href="#play">Play</a></li>
@@ -60,7 +53,7 @@
         </div>
       </section>
 
-      <section id="education" class="education">
+      <section id="about" class="about">
         <div class="container">
           <h2>About</h2>
           <div class="timeline">
@@ -82,15 +75,15 @@
         </div>
       </section>
 
-      <div id="settings">
+      <section id="settings">
         <div class="spacer"></div>
-        <h2 style="color: #E93F51;">Settings</h2>
+        <h2 >Settings</h2>
         <p>
             <strong>Difficulty:</strong>
             <select id="difficulty-select" class="textInput">
-                <option value="easy">Easy (40x30)</option>
-                <option value="medium" selected>Medium (80x60)</option>
-                <option value="hard">Hard (120x90)</option>
+                <option value="easy">Easy</option>
+                <option value="medium" selected>Medium</option>
+                <option value="hard">Hard</option>
             </select>
             <a href="#game">
                 <button id="str-btn" onclick="gameStart()">
@@ -120,9 +113,9 @@
         </p> 
         <p id="hint_settings" onclick="$(this).fadeOut('slow')"> </p>
         <div class="spacer"></div>
-    </div>
+      </section>
 
-    <div id="leaderboard" class="leaderboard-container">
+    <section id="leaderboard" class="leaderboard-container">
       <h2 class="leaderboard-title">Leaderboard</h2>
       <table class="leaderboard-table">
           <thead>
@@ -137,45 +130,37 @@
               <!-- Rows will be populated here by JavaScript -->
           </tbody>
       </table>
-  </div>
+    </section>
 
-      <section id="play" class="play">
-    <div class="container">
-        <h2 class="pixelated" onclick="gameStart()" style="cursor: pointer;">
-            Let's Game!
-        </h2>
-        <div class="mode-selection">
-            <p>
-                <strong>Mode:</strong>
-            </p>
-            <div class="mode-options">
-                <div class="mode-option" onclick="setMode('light')" id="lightMode">
-                    Light Mode
-                </div>
-                <div class="mode-option" onclick="setMode('night')" id="nightMode">
-                    Night Mode
-                </div>
-            </div>
-        </div>
-        <div class="timer">
-            <p>Timer: <span id="timer">00:00</span></p>
-        </div>
-        <div class="cta-buttons">
-            <a href="#" class="btn primary">Play Now</a>
-        </div>
-        <div id="algorithm-explanation-modal" class="modal">
-            <div class="modal-content">
-                <span class="close-button" onclick="closeModal()">&times;</span>
-                <h2>Algorithm Explanation</h2>
-                <p id="algorithm-explanation-text"></p>
-            </div>
-        </div>
-        <div id="maze"></div>
-        <p id="hint_play" onclick="$(this).fadeOut('slow')"> </p>
-        <div class="spacer" id="btm"></div>
+  <section id="play">
+    <h2 onclick="gameStart()">Let's Game!</h2>
+    <div id="timer-display" class="timer">Time: 0.00s</div>
+    <div id="maze">Maze will be rendered here.</div>
+
+    <div class="button-group">
+        <button id="rst-btn" onclick="gameRestart()">Restart</button>
+        <button id="skp-btn1" onclick="skip1()">Skip Creating</button>
+        <button id="skp-btn2" onclick="skip2()">Skip Solving</button>
     </div>
-</section>
 
+    <p>
+        <strong>Theme:</strong>&nbsp;&nbsp;&nbsp;
+        Candy Floss <input id="color0" value="0" type="radio" name="colors" onclick="colorChange()" />&nbsp;&nbsp;
+        Buttercream <input id="color1" value="1" type="radio" name="colors" onclick="colorChange()" />&nbsp;&nbsp;
+        Venomous Green <input id="color2" value="2" type="radio" name="colors" onclick="colorChange()" />&nbsp;&nbsp;
+        Steel Mist <input id="color3" value="3" type="radio" name="colors" onclick="colorChange()" />
+    </p>
+
+    <div id="algorithm-explanation-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <h2>Algorithm Explanation</h2>
+            <p id="algorithm-explanation-text">Algorithm explanation text will go here.</p>
+        </div>
+    </div>
+
+    <p id="hint_play" onclick="$(this).fadeOut('slow')">Click here to hide this hint.</p>
+</section>
 
       <section id="testimonials" class="testimonials">
         <div class="container">
