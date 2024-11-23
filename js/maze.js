@@ -759,4 +759,5 @@ function init() {
 	document.getElementById('difficulty-select').value = 'medium';
 	document.getElementById('difficulty-select').addEventListener('change', setDifficultyLevel);
 	setDifficultyLevel();
+	}
 }
