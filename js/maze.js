@@ -14,7 +14,6 @@ colors = [
 ]
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Show the username creation div when Start Game is clicked
     document.querySelector('.btn.primary').addEventListener('click', function () {
         document.getElementById('create-username').style.display = 'block';
     });
