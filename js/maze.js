@@ -193,19 +193,40 @@ function skip2() {
 	}
 }
 function iniGame() {
-	stack = []; stack_next = []; stack_wfs = [];
-	begin = { x: -1, y: -1 }; start = { x: -1, y: -1 }; end = { x: -1, y: -1 };
-	stepsTaken = [];
-	timeComplexity = "";
+    stack = [];
+    stack_next = [];
+    stack_wfs = [];
+    begin = { x: -1, y: -1 };
+    start = { x: -1, y: -1 };
+    end = { x: -1, y: -1 };
+    stepsTaken = []; // Initialize steps taken
+    pathLength = 0; // Initialize path length
+    timeComplexity = ""; // Initialize time complexity
 }
+
 function gameOver() {
     if (isTimerRunning) {
         const finalTime = stopTimer();
         prompt_play(`Maze completed in ${finalTime.toFixed(2)} seconds!`);
 
+        // Calculate time complexity based on the algorithm
+        if (solverIdx === 0 || solverIdx === 1 || solverIdx === 2) {
+            timeComplexity = "O(V + E)"; // BFS, A*, WFS
+        } else if (solverIdx === 3) {
+            timeComplexity = "O(V + E)"; // DFS
+        } else if (solverIdx === 4) {
+            timeComplexity = "O(E log V)"; // Dijkstra
+        }
+
+        // Log the current state before calling the explanation function
+        console.log("Steps Taken:", stepsTaken.length);
+        console.log("Path Length:", pathLength);
+        console.log("Time Complexity:", timeComplexity);
+
         // Call showAlgorithmExplanation with the current algorithm and other data
         showAlgorithmExplanation(currentAlgorithm, stepsTaken.length, pathLength, timeComplexity);
-	}
+		openModal();
+    }
 
     iniGame();
     $("#skp-btn2").fadeOut("slow");
@@ -215,7 +236,7 @@ function gameOver() {
     $("#solver2").attr("disabled", false);
     $("#solver3").attr("disabled", false);
 
-	onGameEnd();
+    onGameEnd();
 }
 	
 function prompt_settings(message) {
