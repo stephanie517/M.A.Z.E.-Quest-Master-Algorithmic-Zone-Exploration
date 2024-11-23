@@ -24,33 +24,42 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-function createUsername() {
-    var username = document.getElementById('username-input').value.trim();
-    if (username) {
-        // Save the username (e.g., in localStorage or to a database)
-        localStorage.setItem('username', username);
-        alert("Username '" + username + "' created!");
-
-        // Hide the username creation div
-        document.getElementById('create-username').style.display = 'none';
-
-        // Proceed with the game logic or transition to the game
-    } else {
-        alert("Please enter a valid username.");
-    }
-	closeUsernameModal();
-}
-
-// Open the modal
 function openUsernameModal() {
-	const modal = document.getElementById('username-modal');
-	modal.style.display = 'block';
+	const modal = document.getElementById("username-modal");
+	modal.style.display = "flex"; // Show modal
   }
   
-  // Close the modal
-function closeUsernameModal() {
-	const modal = document.getElementById('username-modal');
-	modal.style.display = 'none';
+  function closeUsernameModal() {
+	const modal = document.getElementById("username-modal");
+	modal.style.display = "none"; // Hide modal
+  }
+  
+  function createUsername() {
+	const usernameInput = document.getElementById("username-input").value.trim();
+  
+	if (usernameInput === "") {
+	  alert("Please enter a valid username!");
+	  return;
+	}
+  
+	// Save the username (e.g., in localStorage)
+	localStorage.setItem("username", usernameInput);
+  
+	// Update modal content dynamically
+	const modalContent = document.getElementById("modal-content");
+	modalContent.innerHTML = `
+	  <span class="close-button" onclick="closeUsernameModal()">&times;</span>
+	  <h2>Welcome, ${usernameInput}!</h2>
+	  <p>What would you like to do next?</p>
+	  <button id="play-now-btn" onclick="gameStart()">Play Now!</button>
+	  <button id="settings-btn" onclick="goToSettings()">Go to Settings</button>
+	`;
+  }
+
+function goToSettings() {
+	alert("Navigating to Settings...");
+	closeUsernameModal();
+	window.location.hash = "#settings";
   }
 
 let startTime, endTime, timerInterval;
@@ -701,6 +710,10 @@ function createCanvas(w, h) {
 }
 
 function gameStart() {
+	alert("Starting the game...");
+    closeUsernameModal();
+	window.location.hash = "#play";
+
     if (game)
         return;
     

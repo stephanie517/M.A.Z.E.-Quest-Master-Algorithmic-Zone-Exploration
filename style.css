@@ -300,6 +300,7 @@ nav a:hover {
   opacity: 0.8;
 }
 
+/* settings section */
 #settings {
   min-height: 100vh;
   display: flex;
@@ -652,7 +653,7 @@ input:checked + .slider:before {
   }
   
   .solver-button {
-    min-width: auto;  /* Remove min-width constraint */
+    min-width: auto;
   }
   
   .toggle-option {
@@ -838,20 +839,20 @@ input[type="radio"] {
 }
 
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1000; /* Sit on top */
+  display: none;
+  position: fixed;
+  z-index: 1000;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.7); /* Black w/ opacity */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .modal-content {
   background-color: #000000;
-  margin: 15% auto; /* 15% from the top and centered */
+  margin: 15% auto;
   padding: 20px;
   border-radius: 10px;
   border: 1px solid var(--glass-border);
@@ -859,6 +860,49 @@ input[type="radio"] {
   width: 50%;
   max-width: 600px;
   box-shadow: 0 4px 6px var(--glass-border);
+}
+
+.modal-content:hover {
+  transform: translateY(-4px);
+}
+
+.textInput {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+  transition: var(--transition);
+}
+
+.textInput:focus {
+  border-color: var(--accent);
+  background: var(--glass-bg);
+}
+
+#create-username-btn {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--bg-primary);
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+#create-username-btn:hover {
+  background: linear-gradient(120deg, rgba(100, 255, 218, 0.8), rgba(72, 149, 239, 0.8));
+  color: var(--text-primary);
+}
+
+#username-modal {
+  animation: fadeIn 0.5s ease-in-out;
 }
 
 .close-button {
