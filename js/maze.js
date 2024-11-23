@@ -174,14 +174,8 @@ function gameOver() {
         const finalTime = stopTimer();
         prompt_play(`Maze completed in ${finalTime.toFixed(2)} seconds!`);
 
-	// Create a message with the analysis
-        let analysisMessage = `Algorithm: ${currentAlgorithm}\n`;
-        analysisMessage += `Steps taken: ${stepsTaken.length}\n`;
-        analysisMessage += `Path Length: ${pathLength}\n`;
-        analysisMessage += `Time Complexity: ${timeComplexity}\n`;
-        
-        alert(analysisMessage); // Show the analysis in a pop-up
-    }
+        // Call showAlgorithmExplanation with the current algorithm and other data
+        showAlgorithmExplanation(currentAlgorithm, stepsTaken.length, pathLength, timeComplexity);
     
     iniGame();
     $("#skp-btn2").fadeOut("slow");
@@ -193,6 +187,7 @@ function gameOver() {
 
 	onGameEnd();
 }
+	
 function prompt_settings(message) {
 	// Use jQuery method to modify the content of the <p> tag, the following is the native JS method
 	// document.getElementById("#hint_settings").innerHTML = message;
@@ -258,17 +253,21 @@ const algorithmExplanations = {
     "DFS": "Depth-First Search (DFS) explores as far as possible along a branch before backtracking, which may not guarantee the shortest path.",
     "Dijkstra's": "Dijkstra's Algorithm systematically calculates the shortest path from the start to the goal using edge weights."
 };
-function showAlgorithmExplanation(algorithm) {
+function showAlgorithmExplanation(algorithm, stepsTakenCount, pathLength, timeComplexity) {
     const explanationModal = document.getElementById("algorithm-explanation-modal");
     const explanationText = document.getElementById("algorithm-explanation-text");
     
     // Prepare the explanation text
     let explanation = algorithmExplanations[algorithm] || "Explanation not available.";
     
-    // Add analysis information
-    explanation += `\n\nSteps taken: ${stepsTaken.length}`;
-    explanation += `\nPath Length: ${pathLength}`;
-    explanation += `\nTime Complexity: ${timeComplexity}`;
+    // Create the analysis message
+    let analysisMessage = `Algorithm: ${algorithm}\n`;
+    analysisMessage += `Steps taken: ${stepsTakenCount}\n`;
+    analysisMessage += `Path Length: ${pathLength}\n`;
+    analysisMessage += `Time Complexity: ${timeComplexity}\n`;
+    
+    // Add analysis information to the explanation
+    explanation += `\n\n${analysisMessage}`;
     
     explanationText.innerText = explanation;
     explanationModal.style.display = "block";
@@ -318,6 +317,11 @@ function drawPath() {
         tmp = stack.pop();
         stepsTaken.push({ x: tmp.x, y: tmp.y }); // Track the step taken
         pathLength++; // Increment path length
+
+	// Log the current state
+        console.log("Steps Taken:", stepsTaken.length);
+        console.log("Path Length:", pathLength);
+
         if (isNext(tmp, start)) {
             if (maze[tmp.x][tmp.y] == 2) drawRect(tmp, 3);
             start = tmp;
