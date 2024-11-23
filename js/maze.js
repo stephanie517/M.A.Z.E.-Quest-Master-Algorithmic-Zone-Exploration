@@ -13,11 +13,15 @@ colors = [
 	["#EAEAEA", "#D4D4D4", "white",   "black",   "white",   "black",   "black"  ]
 ]
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Show the username creation div when Start Game is clicked
-    document.querySelector('.btn.primary').addEventListener('click', function () {
-        document.getElementById('create-username').style.display = 'block';
-    });
+document.addEventListener("DOMContentLoaded", function() {
+    init();
+    const startButton = document.querySelector('.btn.primary');
+    if (startButton) {
+        startButton.addEventListener('click', function() {
+            document.getElementById('create-username').style.display = 'block';
+            gameStart(); // Make sure game starts after username creation
+        });
+    }
 });
 
 function createUsername() {
@@ -201,7 +205,8 @@ function gameOver() {
 
         // Call showAlgorithmExplanation with the current algorithm and other data
         showAlgorithmExplanation(currentAlgorithm, stepsTaken.length, pathLength, timeComplexity);
-    
+	}
+
     iniGame();
     $("#skp-btn2").fadeOut("slow");
     isAniSolv = $("#inAniSolv").prop('checked');
@@ -760,4 +765,3 @@ function init() {
 	document.getElementById('difficulty-select').addEventListener('change', setDifficultyLevel);
 	setDifficultyLevel();
 	}
-}
