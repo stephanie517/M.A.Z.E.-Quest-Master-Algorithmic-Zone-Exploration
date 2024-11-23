@@ -7,15 +7,9 @@
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/maze.js"></script>
     <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   </head>
   <body onload="init()">
     <header>
@@ -43,7 +37,7 @@
             <h2 class="slide-in">Master Algorithmic Zone Exploration</h2>
             <p class="fade-in">Navigate the Maze, Master the Path – Explore Shortest Routes with Smart Algorithms!</p>
             <div class="cta-buttons">
-              <a href="./Sample_Resume_Template.pdf" class="btn primary">Start Game</a>
+              <a class="btn primary" onclick="openUsernameModal()">Start Game</button>
               <a href="#contact" class="btn secondary">Player</a>
             </div>
           </div>
@@ -52,6 +46,15 @@
           </div>
         </div>
       </section>
+      
+      <div id="username-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <span class="close-button" onclick="closeUsernameModal()">&times;</span>
+          <h2>Choose a Name to Begin!</h2>
+          <input type="text" id="username-input" placeholder="Enter Username" class="textInput" />
+          <button id="create-username-btn" onclick="createUsername()">Submit</button>
+        </div>
+      </div>      
 
       <section id="about" class="about">
         <div class="container">

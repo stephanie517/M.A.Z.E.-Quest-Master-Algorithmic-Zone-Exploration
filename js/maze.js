@@ -13,16 +13,41 @@ colors = [
 	["#EAEAEA", "#D4D4D4", "white",   "black",   "white",   "black",   "black"  ]
 ]
 
+document.addEventListener("DOMContentLoaded", function () {
+    // Show the username creation div when Start Game is clicked
+    document.querySelector('.btn.primary').addEventListener('click', function () {
+        document.getElementById('create-username').style.display = 'block';
+    });
+});
+
 function createUsername() {
-    var username = document.getElementById('username-input').value;
+    var username = document.getElementById('username-input').value.trim();
     if (username) {
         // Save the username (e.g., in localStorage or to a database)
         localStorage.setItem('username', username);
         alert("Username '" + username + "' created!");
+
+        // Hide the username creation div
+        document.getElementById('create-username').style.display = 'none';
+
+        // Proceed with the game logic or transition to the game
     } else {
         alert("Please enter a valid username.");
     }
+	closeUsernameModal();
 }
+
+// Open the modal
+function openUsernameModal() {
+	const modal = document.getElementById('username-modal');
+	modal.style.display = 'block';
+  }
+  
+  // Close the modal
+function closeUsernameModal() {
+	const modal = document.getElementById('username-modal');
+	modal.style.display = 'none';
+  }
 
 let startTime, endTime, timerInterval;
 let isTimerRunning = false;
