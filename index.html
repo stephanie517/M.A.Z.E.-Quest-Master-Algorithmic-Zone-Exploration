@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   </head>
   <body onload="init()">
@@ -38,7 +39,7 @@
             <p class="fade-in">Navigate the Maze, Master the Path – Explore Shortest Routes with Smart Algorithms!</p>
             <div class="cta-buttons">
               <a class="btn primary" onclick="openUsernameModal()">Start Game</button>
-              <a href="#contact" class="btn secondary">Player</a>
+              <a class="btn secondary">Watch tutorial</a>
             </div>
           </div>
           <div class="hero-image">
@@ -79,43 +80,104 @@
       </section>
 
       <section id="settings">
-        <div class="spacer"></div>
-        <h2 >Settings</h2>
-        <p>
-            <strong>Difficulty:</strong>
-            <select id="difficulty-select" class="textInput">
-                <option value="easy">Easy</option>
-                <option value="medium" selected>Medium</option>
-                <option value="hard">Hard</option>
-            </select>
-            <a href="#game">
-                <button id="str-btn" onclick="gameStart()">
-                    Start Game
+        <div class="background-effects">
+          <div class="gradient-sphere"></div>
+          <div class="gradient-sphere"></div>
+          <div class="floating-shapes"></div>
+        </div>
+      
+        <h2 class="title">Settings</h2>
+        
+        <div class="settings-container">
+          <div class="glass-effect"></div>
+          
+          <div class="settings-row difficulty-section">
+            <label class="setting-label">Difficulty</label>
+            <div class="controls-group">
+              <div class="select-wrapper">
+                <select id="difficulty-select" class="custom-select">
+                  <option value="easy">Easy</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="hard">Hard</option>
+                </select>
+                <span class="select-icon">▼</span>
+              </div>
+              <a href="#game">
+                <button id="str-btn" class="start-button" onclick="gameStart()">
+                  <span class="button-text">Start Game</span>
+                  <span class="button-icon">→</span>
                 </button>
-            </a>
-        </p>  
-        <p id="solverSelect">
-          <strong>Solver:</strong> &nbsp;&nbsp;&nbsp;
-          <input id="solver0" value="0" type="radio" name="solvers" onclick="solverChange()" />
-          <label for="solver0">BFS</label>
-          <input id="solver1" value="1" type="radio" name="solvers" onclick="solverChange()" />
-          <label for="solver1">A*</label>
-          <input id="solver2" value="2" type="radio" name="solvers" onclick="solverChange()" />
-          <label for="solver2">WFS</label>
-          <input id="solver3" value="3" type="radio" name="solvers" onclick="solverChange()" />
-          <label for="solver3">DFS</label>
-          <input id="solver4" value="4" type="radio" name="solvers" onclick="solverChange()" />
-          <label for="solver4">Dijkstra's</label>
-      </p>
-        <p>
-            Show drawing animation 
-            <input id="inAniMaze" type="checkbox" class="checkInput" onclick="checkChange()" />
-            <br/>
-            Show solving animation 
-            <input id="inAniSolv" type="checkbox" class="checkInput" onclick="checkChange()" />
-        </p> 
-        <p id="hint_settings" onclick="$(this).fadeOut('slow')"> </p>
-        <div class="spacer"></div>
+              </a>
+            </div>
+          </div>
+      
+          <div class="settings-row solver-section">
+            <label class="setting-label">Solver</label>
+            <div class="solver-options">
+              <div class="solver-button">
+                <input id="solver0" value="0" type="radio" name="solvers" onclick="solverChange()" checked/>
+                <label for="solver0">
+                  <span class="icon">⚡</span>
+                  BFS
+                </label>
+              </div>
+              <div class="solver-button">
+                <input id="solver1" value="1" type="radio" name="solvers" onclick="solverChange()" />
+                <label for="solver1">
+                  <span class="icon">★</span>
+                  A*
+                </label>
+              </div>
+              <div class="solver-button">
+                <input id="solver2" value="2" type="radio" name="solvers" onclick="solverChange()" />
+                <label for="solver2">
+                  <span class="icon">↔</span>
+                  WFS
+                </label>
+              </div>
+              <div class="solver-button">
+                <input id="solver3" value="3" type="radio" name="solvers" onclick="solverChange()" />
+                <label for="solver3">
+                  <span class="icon">↳</span>
+                  DFS
+                </label>
+              </div>
+              <div class="solver-button">
+                <input id="solver4" value="4" type="radio" name="solvers" onclick="solverChange()" />
+                <label for="solver4">
+                  <span class="icon">◆</span>
+                  Dijkstra's
+                </label>
+              </div>
+            </div>
+          </div>
+      
+          <div class="settings-row animation-section">
+            <div class="toggle-option">
+              <label class="setting-label">
+                <span class="label-icon">🎨</span>
+                Show drawing animation
+              </label>
+              <label class="toggle">
+                <input id="inAniMaze" type="checkbox" onclick="checkChange()">
+                <span class="slider"></span>
+              </label>
+            </div>
+            
+            <div class="toggle-option">
+              <label class="setting-label">
+                <span class="label-icon">✨</span>
+                Show solving animation
+              </label>
+              <label class="toggle">
+                <input id="inAniSolv" type="checkbox" onclick="checkChange()">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+          
+          <p id="hint_settings" onclick="$(this).fadeOut('slow')"></p>
+        </div>
       </section>
 
     <section id="leaderboard" class="leaderboard-container">
@@ -136,7 +198,7 @@
     </section>
 
   <section id="play">
-    <h2 onclick="gameStart()">Let's Game!</h2>
+    <h2>Let's Game!</h2>
     <div id="timer-display" class="timer">Time: 0.00s</div>
     <div id="maze">Maze will be rendered here.</div>
     <div class="button-group">
@@ -204,7 +266,7 @@
             <a href="#"><i class="fab fa-linkedin"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
           </div>
-          <p>&copy; 2024 Mahadi Hasan. All rights reserved.</p>
+          <p>&copy; 2024 ReSourceFul. All rights reserved.</p>
         </div>
       </div>
     </footer>
