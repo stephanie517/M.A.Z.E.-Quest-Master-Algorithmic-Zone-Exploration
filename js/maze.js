@@ -13,13 +13,23 @@ colors = [
 	["#EAEAEA", "#D4D4D4", "white",   "black",   "white",   "black",   "black"  ]
 ]
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
+    // Menu toggle functionality
+    const menuIcon = document.querySelector('.menu');
+    const navUl = document.querySelector('nav ul');
+
+    menuIcon.addEventListener('click', function() {
+        navUl.classList.toggle('show');
+        menuIcon.classList.toggle('active');
+    });
+
+    // Game start functionality
     init();
     const startButton = document.querySelector('.btn.primary');
     if (startButton) {
         startButton.addEventListener('click', function() {
             document.getElementById('create-username').style.display = 'block';
-            gameStart(); // Make sure game starts after username creation
+            gameStart();
         });
     }
 });

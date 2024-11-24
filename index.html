@@ -198,7 +198,7 @@
     </section>
 
   <section id="play">
-    <h2 onclick="gameStart()">LET'S GAME!</h2>
+    <h2>LET'S GAME!</h2>
     <div id="timer-display" class="timer">Time: 0.00s</div>
     <div id="maze">Maze will be rendered here.</div>
     <div class="button-group">
@@ -270,16 +270,5 @@
       </div>
     </footer>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const menuIcon = document.querySelector('.menu');
-        const navUl = document.querySelector('nav ul');
-
-        menuIcon.addEventListener('click', function() {
-          navUl.classList.toggle('show');
-          menuIcon.classList.toggle('active');
-        });
-      });
-    </script>
   </body>
 </html>

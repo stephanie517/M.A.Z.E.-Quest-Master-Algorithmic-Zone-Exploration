@@ -426,7 +426,6 @@ nav a:hover {
   justify-content: center;
 }
 
-/* Custom Select Styling */
 .select-wrapper {
   position: relative;
   display: inline-block;
@@ -460,7 +459,6 @@ nav a:hover {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Start Button */
 .start-button {
   background: linear-gradient(135deg, #5fffd7, #4facfe);
   color: #1a1a1a;
@@ -498,7 +496,6 @@ nav a:hover {
   animation: button-shine 1.5s infinite;
 }
 
-/* Solver Options */
 .solver-options {
   display: flex;
   flex-wrap: wrap;
@@ -549,7 +546,6 @@ nav a:hover {
   transform: scale(1.1);
 }
 
-/* Toggle Switch */
 .toggle-option {
   display: flex;
   justify-content: space-between;
