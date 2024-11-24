@@ -7,11 +7,11 @@ let pathLength = 0;
 let timeComplexity = "";
 
 colors = [
-	["#FFB1A7", "#EEFFFF", "#FA9A71", "#FF7777", "#FFDDAA", "#FF7777", "#FF7777"],
-	["#EEFFFF", "#FFDDAA", "#FA9A71", "#FF7777", "#FFB1A7", "#FF7777", "#FF7777"],
-	["black",   "green",   "red",     "yellow",  "#772222", "yellow",  "yellow" ],
-	["#EAEAEA", "#D4D4D4", "white",   "black",   "white",   "black",   "black"  ]
-]
+    ["#E0FFFF", "#B0E0E6", "#FFFFFF", "#000000", "#E0FFFF", "#000000", "#000000"], // Color set 4
+    ["#64ffda", "#111111", "#fe53bb", "#3a86ff", "#ff6b35", "#8338ec", "#f7d716"], // Color set 1
+    ["#00b4d8", "#111111", "#ff006e", "#8338ec", "#3a86ff", "#fb5607", "#ffbe0b"], // Color set 2
+    ["#004D4D", "#008B8B", "#00FFFF", "#00BFFF", "#20B2AA", "#00CED1", "#00FFFF"]  // Color set 3
+];
 
 document.addEventListener('DOMContentLoaded', function() {
     // Menu toggle functionality
@@ -229,13 +229,19 @@ function gameOver() {
         prompt_play(`Maze completed in ${finalTime.toFixed(2)} seconds!`);
 
         // Calculate time complexity based on the algorithm
-        if (solverIdx === 0 || solverIdx === 1 || solverIdx === 2) {
-            timeComplexity = "O(V + E)"; // BFS, A*, WFS
-        } else if (solverIdx === 3) {
-            timeComplexity = "O(V + E)"; // DFS
-        } else if (solverIdx === 4) {
-            timeComplexity = "O(E log V)"; // Dijkstra
-        }
+        if (solverIdx === 0 || solverIdx === 3) { // BFS or DFS
+			timeComplexity = `O(V + E) where V=${cols * rows} and E (estimated)=${(cols * rows) * 4}`;
+		} else if (solverIdx === 4) { // Dijkstra
+			timeComplexity = `O(V^2) where V=${cols * rows}`; // Approximation for dense graphs
+		} else if (solverIdx === 1) { // A*
+			let branchingFactor = 4; // Up, down, left, right
+			let depth = Math.ceil(Math.sqrt(cols * rows)); // Approximate maximum depth in a grid
+			timeComplexity = `O(${branchingFactor}^d) where d (depth) is approximately ${depth}`;
+			// Alternatively, you could express it in terms of V:
+			timeComplexity = `O(${branchingFactor}^d) or O(V) if heuristic is optimal, where V=${cols * rows}`;
+		} else if (solverIdx === 2) { // WFS
+			timeComplexity = `O(M * N) for measurement where M=${cols} and N=${rows}, and O(M^3) for reconstruction`;
+		}
 
         // Log the current state before calling the explanation function
         console.log("Steps Taken:", stepsTaken.length);
@@ -289,17 +295,37 @@ function isNext(a, b) {
 }
 // Accelerate rendering, discard drawMaze
 function drawRect(VAR, TO) {
-	maze[VAR.x][VAR.y] = TO;
-	switch (TO) {
-		case 0: ctx.fillStyle = colors[colorIdx][0]; break;   // Path             
-		case 1: ctx.fillStyle = colors[colorIdx][1]; break;   // Wall
-		case 2: ctx.fillStyle = colors[colorIdx][2]; break;   // Current path      
-		case 3: ctx.fillStyle = colors[colorIdx][3]; break;   // Correct path        
-		case 4: ctx.fillStyle = colors[colorIdx][4]; break;   // Path to go / Wrong path
-		case 5: ctx.fillStyle = colors[colorIdx][5]; break;   // Starting point     
-		case 6: ctx.fillStyle = colors[colorIdx][6]; break;   // End point
-	}
-	ctx.fillRect(VAR.x * grid, VAR.y * grid, grid, grid);
+    maze[VAR.x][VAR.y] = TO;
+
+    // Set shadow properties for glowing effect
+    ctx.shadowColor = "rgba(100, 255, 218, 0.8)"; // Glow color (light cyan)
+    ctx.shadowBlur = 20; // Blur radius for glow
+    ctx.shadowOffsetX = 0; // No horizontal offset
+    ctx.shadowOffsetY = 0; // No vertical offset
+
+    // Check if colorIdx is within the valid range
+    if (colorIdx < 0 || colorIdx >= colors.length) {
+        console.error("Invalid colorIdx:", colorIdx);
+        return; // Exit the function if colorIdx is invalid
+    }
+
+    // Set fill color based on the type of cell
+    switch (TO) {
+        case 0: ctx.fillStyle = colors[colorIdx][0]; break;   // Path
+        case 1: ctx.fillStyle = colors[colorIdx][1]; break;   // Wall
+        case 2: ctx.fillStyle = colors[colorIdx][2]; break;   // Current path
+        case 3: ctx.fillStyle = colors[colorIdx][3]; break;   // Correct path
+        case 4: ctx.fillStyle = colors[colorIdx][4]; break;   // Path to go / Wrong path
+        case 5: ctx.fillStyle = colors[colorIdx][5]; break;   // Starting point
+        case 6: ctx.fillStyle = colors[colorIdx][6]; break;   // End point
+        default: console.error("Invalid TO value:", TO); return; // Handle invalid TO
+    }
+
+    ctx.fillRect(VAR.x * grid, VAR.y * grid, grid, grid);
+
+    // Reset shadow properties
+    ctx.shadowColor = "transparent"; // Reset shadow color
+    ctx.shadowBlur = 0; // Reset blur
 }
 const DIFFICULTY_SETTINGS = {
     easy: { cols: 40, rows: 30 },
@@ -531,11 +557,9 @@ function Dijkstra() {
 	let visited = new Set();
 
 	function step() {
-		if (priorityQueue.length === 0 || (start.x === end.x && start.y === end.y)) {
-			game = 0;
-			drawPath();
-			return;
-		}
+		if (priorityQueue.length === 0) {
+            return; // No more nodes to process
+        }
 
 		// Sort queue to get the cell with the smallest distance
 		priorityQueue.sort((a, b) => a.dist - b.dist);
@@ -553,8 +577,9 @@ function Dijkstra() {
 
 		// Check if we've reached the end
 		if (x === end.x && y === end.y) {
-			game = 0;
-			drawPath();
+			game = 0; // Set game state to over
+            stopTimer(); // Stop the timer
+            drawPath(); // Draw the final path
 			return;
 		}
 
