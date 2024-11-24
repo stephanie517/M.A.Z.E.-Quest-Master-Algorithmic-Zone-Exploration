@@ -7,10 +7,10 @@ let pathLength = 0;
 let timeComplexity = "";
 
 colors = [
-    ["#E0FFFF", "#B0E0E6", "#FFFFFF", "#000000", "#E0FFFF", "#000000", "#000000"], // Color set 4
-    ["#64ffda", "#111111", "#fe53bb", "#3a86ff", "#ff6b35", "#8338ec", "#f7d716"], // Color set 1
-    ["#00b4d8", "#111111", "#ff006e", "#8338ec", "#3a86ff", "#fb5607", "#ffbe0b"], // Color set 2
-    ["#004D4D", "#008B8B", "#00FFFF", "#00BFFF", "#20B2AA", "#00CED1", "#00FFFF"]  // Color set 3
+	["#64ffda", "#111111", "#fe53bb", "#3a86ff", "#ff6b35", "#8338ec", "#f7d716"], //Neon Nights
+    ["#00b4d8", "#111111", "#ff006e", "#8338ec", "#3a86ff", "#fb5607", "#ffbe0b"], //Cyber Punk
+    ["#004D4D", "#008B8B", "#00FFFF", "#00BFFF", "#20B2AA", "#00CED1", "#00FFFF"], //Ocean Deep
+	["#E0FFFF", "#B0E0E6", "#FFFFFF", "#000000", "#E0FFFF", "#000000", "#000000"] //Arctic Frost
 ];
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -229,19 +229,17 @@ function gameOver() {
         prompt_play(`Maze completed in ${finalTime.toFixed(2)} seconds!`);
 
         // Calculate time complexity based on the algorithm
-        if (solverIdx === 0 || solverIdx === 3) { // BFS or DFS
-			timeComplexity = `O(V + E) where V=${cols * rows} and E (estimated)=${(cols * rows) * 4}`;
+		if (solverIdx === 0 || solverIdx === 3) { // BFS or DFS
+			timeComplexity = `O(${cols * rows} + ${cols * rows * 4})`;
 		} else if (solverIdx === 4) { // Dijkstra
-			timeComplexity = `O(V^2) where V=${cols * rows}`; // Approximation for dense graphs
+			timeComplexity = `O(${cols * rows}^2)`;
 		} else if (solverIdx === 1) { // A*
 			let branchingFactor = 4; // Up, down, left, right
 			let depth = Math.ceil(Math.sqrt(cols * rows)); // Approximate maximum depth in a grid
-			timeComplexity = `O(${branchingFactor}^d) where d (depth) is approximately ${depth}`;
-			// Alternatively, you could express it in terms of V:
-			timeComplexity = `O(${branchingFactor}^d) or O(V) if heuristic is optimal, where V=${cols * rows}`;
+			timeComplexity = `O(${branchingFactor}^${depth}) or O(${cols * rows})`;
 		} else if (solverIdx === 2) { // WFS
-			timeComplexity = `O(M * N) for measurement where M=${cols} and N=${rows}, and O(M^3) for reconstruction`;
-		}
+			timeComplexity = `O(${cols} * ${rows}) or O(${cols}^3)`;
+		}		
 
         // Log the current state before calling the explanation function
         console.log("Steps Taken:", stepsTaken.length);
