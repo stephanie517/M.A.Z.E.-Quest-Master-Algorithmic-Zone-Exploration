@@ -229,13 +229,19 @@ function gameOver() {
         prompt_play(`Maze completed in ${finalTime.toFixed(2)} seconds!`);
 
         // Calculate time complexity based on the algorithm
-        if (solverIdx === 0 || solverIdx === 1 || solverIdx === 2) {
-            timeComplexity = "O(V + E)"; // BFS, A*, WFS
-        } else if (solverIdx === 3) {
-            timeComplexity = "O(V + E)"; // DFS
-        } else if (solverIdx === 4) {
-            timeComplexity = "O(E log V)"; // Dijkstra
-        }
+        if (solverIdx === 0 || solverIdx === 3) { // BFS or DFS
+			timeComplexity = `O(V + E) where V=${cols * rows} and E (estimated)=${(cols * rows) * 4}`;
+		} else if (solverIdx === 4) { // Dijkstra
+			timeComplexity = `O(V^2) where V=${cols * rows}`; // Approximation for dense graphs
+		} else if (solverIdx === 1) { // A*
+			let branchingFactor = 4; // Up, down, left, right
+			let depth = Math.ceil(Math.sqrt(cols * rows)); // Approximate maximum depth in a grid
+			timeComplexity = `O(${branchingFactor}^d) where d (depth) is approximately ${depth}`;
+			// Alternatively, you could express it in terms of V:
+			timeComplexity = `O(${branchingFactor}^d) or O(V) if heuristic is optimal, where V=${cols * rows}`;
+		} else if (solverIdx === 2) { // WFS
+			timeComplexity = `O(M * N) for measurement where M=${cols} and N=${rows}, and O(M^3) for reconstruction`;
+		}
 
         // Log the current state before calling the explanation function
         console.log("Steps Taken:", stepsTaken.length);
@@ -531,11 +537,9 @@ function Dijkstra() {
 	let visited = new Set();
 
 	function step() {
-		if (priorityQueue.length === 0 || (start.x === end.x && start.y === end.y)) {
-			game = 0;
-			drawPath();
-			return;
-		}
+		if (priorityQueue.length === 0) {
+            return; // No more nodes to process
+        }
 
 		// Sort queue to get the cell with the smallest distance
 		priorityQueue.sort((a, b) => a.dist - b.dist);
@@ -553,8 +557,9 @@ function Dijkstra() {
 
 		// Check if we've reached the end
 		if (x === end.x && y === end.y) {
-			game = 0;
-			drawPath();
+			game = 0; // Set game state to over
+            stopTimer(); // Stop the timer
+            drawPath(); // Draw the final path
 			return;
 		}
 
