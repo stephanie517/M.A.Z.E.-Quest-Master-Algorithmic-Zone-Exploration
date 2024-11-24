@@ -175,6 +175,30 @@
               </label>
             </div>
           </div>
+
+          <!-- Theme Selection Section -->
+          <div class="settings-row theme-section">
+            <label class="setting-label">Game Theme</label>
+            <p class="theme-instruction">Select a theme for your game to change the visual appearance of the maze.<br> Choose your favorite from the options below:</p>
+            <div class="theme-options">
+                <div class="theme-button">
+                    <input id="color0" value="0" type="radio" name="colors" onclick="colorChange()" checked />
+                    <label for="color0">Candy Floss</label>
+                </div>
+                <div class="theme-button">
+                    <input id="color1" value="1" type="radio" name="colors" onclick="colorChange()" />
+                    <label for="color1">Buttercream</label>
+                </div>
+                <div class="theme-button">
+                    <input id="color2" value="2" type="radio" name="colors" onclick="colorChange()" />
+                    <label for="color2">Venomous</label>
+                </div>
+                <div class="theme-button">
+                    <input id="color3" value="3" type="radio" name="colors" onclick="colorChange()" />
+                    <label for="color3">Steel Mist</label>
+                </div>
+            </div>
+        </div>
           
           <p id="hint_settings" onclick="$(this).fadeOut('slow')"></p>
         </div>
@@ -206,13 +230,7 @@
         <button id="skp-btn1" onclick="skip1()">Skip Creating</button>
         <button id="skp-btn2" onclick="skip2()">Skip Solving</button>
     </div>
-    <p>
-        <strong>Theme:</strong>&nbsp;&nbsp;&nbsp;
-        Candy Floss <input id="color0" value="0" type="radio" name="colors" onclick="colorChange()" />&nbsp;&nbsp;
-        Buttercream <input id="color1" value="1" type="radio" name="colors" onclick="colorChange()" />&nbsp;&nbsp;
-        Venomous Green <input id="color2" value="2" type="radio" name="colors" onclick="colorChange()" />&nbsp;&nbsp;
-        Steel Mist <input id="color3" value="3" type="radio" name="colors" onclick="colorChange()" />
-    </p>
+    
     <div id="algorithm-explanation-modal" class="modal">
         <div class="modal-content">
             <span class="close-button" onclick="closeModal()">&times;</span>
