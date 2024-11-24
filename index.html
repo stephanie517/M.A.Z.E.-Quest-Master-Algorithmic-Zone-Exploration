@@ -7,9 +7,7 @@
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/maze.js"></script>
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&display=swap"/>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600&family=Chakra+Petch:wght@600&family=Space+Mono&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
   </head>
   <body onload="init()">
@@ -22,7 +20,7 @@
           <li><a href="#settings">Settings</a></li>
           <li><a href="#leaderboard">Leaderboard</a></li>
           <li><a href="#play">Play</a></li>
-          <li><a href="#testimonials">About Us</a></li>
+          <li><a href="#aboutus">About Us</a></li>
         </ul>
       <div class="menu">
           <i class="fa-solid fa-bars "></i>
@@ -59,25 +57,49 @@
 
       <section id="about" class="about">
         <div class="container">
-          <h2>About</h2>
+          <h2>About the Game</h2>
           <div class="timeline">
+            <!-- Introduction -->
             <div class="timeline-item">
               <div class="timeline-content">
-                <h3>Maze Quest Overview</h3>
-                <p>M.A.Z.E. Quest lets players choose from BFS, A*, WFS, DFS, or Dijkstra’s Algorithm to guide a character through a maze. The game not only entertains but also educates players about these algorithms and how they find the optimal path through a maze. It highlights computer science concepts like heuristic search and pathfinding efficiency, offering an interactive experience and visual demos.</p>
+                <h3>Welcome to M.A.Z.E. QUEST</h3>
+                <p>
+                  Ever wondered how algorithms like A* and Dijkstra tackle real-world problems? 
+                  M.A.Z.E. QUEST is a unique game-turned-visualizer that lets you explore the magic of pathfinding! 
+                  Choose two points – a start and an end – then watch as your chosen algorithm calculates the best route. 
+                  Along the way, interact by adding extra points to see how the algorithm adapts in real time.
+                </p>
               </div>
             </div>
+      
+            <!-- Features -->
             <div class="timeline-item">
               <div class="timeline-content">
-                <h3>Game Instructions</h3>
-                <p>In this game, you will select an algorithm to navigate through a maze. The goal is to reach the end point using the chosen algorithm’s approach. You'll see the pathfinding process step-by-step, giving you insight into how each algorithm functions. Your mission is to complete the maze as quickly as possible using the best algorithm of your choice!</p>
+                <h3>Key Features</h3>
+                <ul>
+                  <li><strong>Algorithm Explorer:</strong> Choose from A*, WFS, BFS, DFS, or Dijkstra to solve the maze.</li>
+                  <li><strong>Interactive Visualizations:</strong> Add obstacles or waypoints and watch how the algorithm recalculates paths dynamically.</li>
+                  <li><strong>Real-Time Insights:</strong> See how algorithms handle challenges like dead ends and detours.</li>
+                  <li><strong>Leaderboards:</strong> Compete to solve mazes faster by picking smarter algorithms!</li>
+                </ul>
+              </div>
+            </div>
+      
+            <!-- Why Play -->
+            <div class="timeline-item">
+              <div class="timeline-content">
+                <h3>Why M.A.Z.E. QUEST?</h3>
+                <p>
+                  M.A.Z.E. QUEST isn’t just a game – it’s an educational journey wrapped in fun!  
+                  Perfect for coding enthusiasts, students, and curious minds, it offers a chance to visualize 
+                  and experiment with real-world algorithms. Whether you’re solving puzzles or exploring new strategies, 
+                  M.A.Z.E. QUEST makes learning pathfinding exciting and interactive.
+                </p>
               </div>
             </div>
           </div>
         </div>
-          </div>
-        </div>
-      </section>
+      </section>           
 
       <section id="settings">
         <div class="background-effects">
@@ -204,23 +226,6 @@
         </div>
       </section>
 
-    <section id="leaderboard" class="leaderboard-container">
-      <h2 class="leaderboard-title">Leaderboard</h2>
-      <table class="leaderboard-table">
-          <thead>
-              <tr>
-                  <th>Rank</th>
-                  <th>Username</th>
-                  <th>Time (seconds)</th>
-                  <th>Algorithm</th>
-              </tr>
-          </thead>
-          <tbody id="leaderboard-entries">
-              <!-- Rows will be populated here by JavaScript -->
-          </tbody>
-      </table>
-    </section>
-
   <section id="play">
     <h2>LET'S GAME!</h2>
     <div id="timer-display" class="timer">Time: 0.00s</div>
@@ -242,11 +247,28 @@
     </div>
 </section>
 
-      <section id="testimonials" class="testimonials">
+<section id="leaderboard" class="leaderboard-container">
+  <h2 class="leaderboard-title">Leaderboard</h2>
+  <table class="leaderboard-table">
+      <thead>
+          <tr>
+              <th>Rank</th>
+              <th>Username</th>
+              <th>Time (seconds)</th>
+              <th>Algorithm</th>
+          </tr>
+      </thead>
+      <tbody id="leaderboard-entries">
+          <!-- Rows will be populated here by JavaScript -->
+      </tbody>
+  </table>
+</section>
+
+      <section id="aboutus" class="aboutus">
         <div class="container">
           <h2>Client Testimonials</h2>
-          <div class="testimonials-grid">
-            <div class="testimonial-card">
+          <div class="aboutus-grid">
+            <div class="aboutus-card">
               <img
                 src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop"
                 alt="Client 1"
@@ -258,7 +280,7 @@
               <h4>Sarah Johnson</h4>
               <span>CEO, Tech Startup</span>
             </div>
-            <div class="testimonial-card">
+            <div class="aboutus-card">
               <img
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop"
                 alt="Client 2"
