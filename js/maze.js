@@ -7,11 +7,11 @@ let pathLength = 0;
 let timeComplexity = "";
 
 colors = [
-	["#FFB1A7", "#EEFFFF", "#FA9A71", "#FF7777", "#FFDDAA", "#FF7777", "#FF7777"],
-	["#EEFFFF", "#FFDDAA", "#FA9A71", "#FF7777", "#FFB1A7", "#FF7777", "#FF7777"],
-	["black",   "green",   "red",     "yellow",  "#772222", "yellow",  "yellow" ],
-	["#EAEAEA", "#D4D4D4", "white",   "black",   "white",   "black",   "black"  ]
-]
+    ["#E0FFFF", "#B0E0E6", "#FFFFFF", "#000000", "#E0FFFF", "#000000", "#000000"], // Color set 4
+    ["#64ffda", "#111111", "#fe53bb", "#3a86ff", "#ff6b35", "#8338ec", "#f7d716"], // Color set 1
+    ["#00b4d8", "#111111", "#ff006e", "#8338ec", "#3a86ff", "#fb5607", "#ffbe0b"], // Color set 2
+    ["#004D4D", "#008B8B", "#00FFFF", "#00BFFF", "#20B2AA", "#00CED1", "#00FFFF"]  // Color set 3
+];
 
 document.addEventListener('DOMContentLoaded', function() {
     // Menu toggle functionality
@@ -295,17 +295,37 @@ function isNext(a, b) {
 }
 // Accelerate rendering, discard drawMaze
 function drawRect(VAR, TO) {
-	maze[VAR.x][VAR.y] = TO;
-	switch (TO) {
-		case 0: ctx.fillStyle = colors[colorIdx][0]; break;   // Path             
-		case 1: ctx.fillStyle = colors[colorIdx][1]; break;   // Wall
-		case 2: ctx.fillStyle = colors[colorIdx][2]; break;   // Current path      
-		case 3: ctx.fillStyle = colors[colorIdx][3]; break;   // Correct path        
-		case 4: ctx.fillStyle = colors[colorIdx][4]; break;   // Path to go / Wrong path
-		case 5: ctx.fillStyle = colors[colorIdx][5]; break;   // Starting point     
-		case 6: ctx.fillStyle = colors[colorIdx][6]; break;   // End point
-	}
-	ctx.fillRect(VAR.x * grid, VAR.y * grid, grid, grid);
+    maze[VAR.x][VAR.y] = TO;
+
+    // Set shadow properties for glowing effect
+    ctx.shadowColor = "rgba(100, 255, 218, 0.8)"; // Glow color (light cyan)
+    ctx.shadowBlur = 20; // Blur radius for glow
+    ctx.shadowOffsetX = 0; // No horizontal offset
+    ctx.shadowOffsetY = 0; // No vertical offset
+
+    // Check if colorIdx is within the valid range
+    if (colorIdx < 0 || colorIdx >= colors.length) {
+        console.error("Invalid colorIdx:", colorIdx);
+        return; // Exit the function if colorIdx is invalid
+    }
+
+    // Set fill color based on the type of cell
+    switch (TO) {
+        case 0: ctx.fillStyle = colors[colorIdx][0]; break;   // Path
+        case 1: ctx.fillStyle = colors[colorIdx][1]; break;   // Wall
+        case 2: ctx.fillStyle = colors[colorIdx][2]; break;   // Current path
+        case 3: ctx.fillStyle = colors[colorIdx][3]; break;   // Correct path
+        case 4: ctx.fillStyle = colors[colorIdx][4]; break;   // Path to go / Wrong path
+        case 5: ctx.fillStyle = colors[colorIdx][5]; break;   // Starting point
+        case 6: ctx.fillStyle = colors[colorIdx][6]; break;   // End point
+        default: console.error("Invalid TO value:", TO); return; // Handle invalid TO
+    }
+
+    ctx.fillRect(VAR.x * grid, VAR.y * grid, grid, grid);
+
+    // Reset shadow properties
+    ctx.shadowColor = "transparent"; // Reset shadow color
+    ctx.shadowBlur = 0; // Reset blur
 }
 const DIFFICULTY_SETTINGS = {
     easy: { cols: 40, rows: 30 },
