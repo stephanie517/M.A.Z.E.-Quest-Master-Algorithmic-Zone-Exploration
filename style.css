@@ -449,8 +449,9 @@ nav a:hover {
 
 .controls-group {
   display: flex;
-  gap: 1rem;
+  align-items: center;
   justify-content: center;
+  gap: 1rem;
 }
 
 .select-wrapper {
@@ -491,9 +492,10 @@ nav a:hover {
   color: var(--bg-primary);
   border: none;
   border-radius: 12px;
-  padding: 0.8rem 2rem;
   font-size: 1.1rem;
   font-weight: 600;
+  flex-shrink: 0;
+  padding: 0.7rem 1.4rem;
   cursor: pointer;
   transition: var(--transition);
   display: flex;
