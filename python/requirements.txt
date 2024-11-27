@@ -1,0 +1,2 @@
+firebase-admin==6.6.0 # This is an example; ensure you use the correct version
+flask==3.0.3  # If you're using Flask to create the API backend

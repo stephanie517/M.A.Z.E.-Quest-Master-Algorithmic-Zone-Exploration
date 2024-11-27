@@ -3,17 +3,13 @@ from firebase_admin import credentials, db
 
 
 # Initialize Firebase
-cred = credentials.Certificate("python/service-account-key.json")  # Path to your JSON key file
+cred = credentials.Certificate("service-account-key.json")  # Path to your JSON key file
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://maze-56ae0-default-rtdb.firebaseio.com/'  # Replace with your database URL
 })
 
-# Test connection
-if __name__ == "__main__":
-    print("Firebase connected successfully!")
-
-# Export the database reference
-database = db
+# Reference the leaderboard node in the database
+leaderboard_ref = db.reference('leaderboard')
 
 def add_leaderboard_entry(rank, username, time, algorithm):
     # Reference the 'leaderboard' node in the database
