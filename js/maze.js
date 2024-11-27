@@ -798,6 +798,25 @@ function gameRestart() {
 	var canvas = document.getElementById("canvas");
 	div.removeChild(canvas);
 	gameStart();
+
+	// Force animation mode for maze generation
+    isAniMaze = true;
+    $("#inAniMaze").prop("checked", true);
+
+	// Navigate to settings section
+    window.location.hash = "#settings";
+
+    // Re-enable algorithm selection buttons
+    $("#solver0").attr("disabled", false);
+    $("#solver1").attr("disabled", false);
+    $("#solver2").attr("disabled", false);
+    $("#solver3").attr("disabled", false);
+
+    // Clear any previous game state
+    iniGame();
+    
+    // Prompt user to select start and end points
+    prompt_play("Note: Please select two points for path observation by computer.");
 }
 
 function checkChange() {
