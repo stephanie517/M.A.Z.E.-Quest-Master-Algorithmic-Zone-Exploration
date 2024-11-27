@@ -36,12 +36,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function openUsernameModal() {
 	const modal = document.getElementById("username-modal");
-	modal.style.display = "flex"; // Show modal
+	modal.style.display = "flex";
   }
   
   function closeUsernameModal() {
 	const modal = document.getElementById("username-modal");
-	modal.style.display = "none"; // Hide modal
+	modal.style.display = "none";
   }
   
   function createUsername() {
@@ -52,10 +52,8 @@ function openUsernameModal() {
 	  return;
 	}
   
-	// Save the username (e.g., in localStorage)
 	localStorage.setItem("username", usernameInput);
   
-	// Update modal content dynamically
 	const modalContent = document.getElementById("modal-content");
 	modalContent.innerHTML = `
 	  <span class="close-button" onclick="closeUsernameModal()">&times;</span>
@@ -78,14 +76,13 @@ let leaderboard = [];
 let currentAlgorithm = "BFS";
 const algorithms = ["BFS", "A*", "WFS", "DFS", "Dijkstra's"];
 
-// Add timer display element update function
 function updateTimerDisplay() {
     const timerElement = document.getElementById('timer-display');
     if (!timerElement) return;
-    
+
     const currentTime = new Date();
-    const elapsedTime = (currentTime - startTime) / 1000; // Convert to seconds
-    timerElement.textContent = elapsedTime.toFixed(2) + 's';
+    const elapsedTime = (currentTime - startTime) / 1000;
+    timerElement.textContent = `Time: ${elapsedTime.toFixed(2)}s`;
 }
 
 function startTimer() {
@@ -93,7 +90,7 @@ function startTimer() {
     
     startTime = new Date();
     isTimerRunning = true;
-    timerInterval = setInterval(updateTimerDisplay, 10); // Update every 10ms for smooth display
+    timerInterval = setInterval(updateTimerDisplay, 10);
 }
 
 function stopTimer() {
@@ -104,11 +101,7 @@ function stopTimer() {
     isTimerRunning = false;
     
     const finalTime = (endTime - startTime) / 1000;
-    
-    // Get username from localStorage
     const username = localStorage.getItem('username') || 'Anonymous';
-    
-    // Update leaderboard with the final time
     updateLeaderboard(username, finalTime);
     
     return finalTime;
@@ -121,7 +114,6 @@ function getCursorPos(event) {
     var x = Math.floor((event.clientX - rect.left) / grid),
         y = Math.floor((event.clientY - rect.top) / grid);
 
-    // Check if the user clicked on the maze
     if (maze[x][y] !== undefined) {
         // Toggle way block
         if (maze[x][y] === 1) {
@@ -153,7 +145,6 @@ function updateLeaderboard(username, time) {
     leaderboard.push({ username: username, time: time, algorithm: currentAlgorithm });
     leaderboard.sort((a, b) => a.time - b.time);
 
-    // Limit leaderboard to top 10 entries
     if (leaderboard.length > 10) {
         leaderboard = leaderboard.slice(0, 10);
     }
@@ -165,7 +156,6 @@ function displayLeaderboard() {
     const leaderboardEntries = document.getElementById('leaderboard-entries');
     leaderboardEntries.innerHTML = "";
 
-    // Loop through the sorted leaderboard and display each entry as a table row
     leaderboard.forEach((entry, index) => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -218,9 +208,9 @@ function iniGame() {
     begin = { x: -1, y: -1 };
     start = { x: -1, y: -1 };
     end = { x: -1, y: -1 };
-    stepsTaken = []; // Initialize steps taken
-    pathLength = 0; // Initialize path length
-    timeComplexity = ""; // Initialize time complexity
+    stepsTaken = [];
+    pathLength = 0;
+    timeComplexity = "";
 }
 
 function gameOver() {
@@ -241,12 +231,10 @@ function gameOver() {
 			timeComplexity = `O(${cols} * ${rows}) or O(${cols}^3)`;
 		}		
 
-        // Log the current state before calling the explanation function
         console.log("Steps Taken:", stepsTaken.length);
         console.log("Path Length:", pathLength);
         console.log("Time Complexity:", timeComplexity);
 
-        // Call showAlgorithmExplanation with the current algorithm and other data
         showAlgorithmExplanation(currentAlgorithm, stepsTaken.length, pathLength, timeComplexity);
 		openModal();
     }
@@ -291,20 +279,19 @@ function sorter(var_a, var_b) {
 function isNext(a, b) {
 	return Math.abs(a.x - b.x) + Math.abs(a.y - b.y) == 1;
 }
-// Accelerate rendering, discard drawMaze
+
 function drawRect(VAR, TO) {
     maze[VAR.x][VAR.y] = TO;
 
     // Set shadow properties for glowing effect
-    ctx.shadowColor = "rgba(100, 255, 218, 0.8)"; // Glow color (light cyan)
-    ctx.shadowBlur = 20; // Blur radius for glow
-    ctx.shadowOffsetX = 0; // No horizontal offset
-    ctx.shadowOffsetY = 0; // No vertical offset
+    ctx.shadowColor = "rgba(100, 255, 218, 0.8)";
+    ctx.shadowBlur = 20;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
 
-    // Check if colorIdx is within the valid range
     if (colorIdx < 0 || colorIdx >= colors.length) {
         console.error("Invalid colorIdx:", colorIdx);
-        return; // Exit the function if colorIdx is invalid
+        return;
     }
 
     // Set fill color based on the type of cell
@@ -320,10 +307,8 @@ function drawRect(VAR, TO) {
     }
 
     ctx.fillRect(VAR.x * grid, VAR.y * grid, grid, grid);
-
-    // Reset shadow properties
-    ctx.shadowColor = "transparent"; // Reset shadow color
-    ctx.shadowBlur = 0; // Reset blur
+    ctx.shadowColor = "transparent";
+    ctx.shadowBlur = 0;
 }
 const DIFFICULTY_SETTINGS = {
     easy: { cols: 40, rows: 30 },
@@ -350,17 +335,14 @@ const algorithmExplanations = {
 function showAlgorithmExplanation(algorithm, stepsTakenCount, pathLength, timeComplexity) {
     const explanationModal = document.getElementById("algorithm-explanation-modal");
     const explanationText = document.getElementById("algorithm-explanation-text");
-    
-    // Prepare the explanation text
+
     let explanation = algorithmExplanations[algorithm] || "Explanation not available.";
     
-    // Create the analysis message
     let analysisMessage = `Algorithm: ${algorithm}\n`;
     analysisMessage += `Steps taken: ${stepsTakenCount}\n`;
     analysisMessage += `Path Length: ${pathLength}\n`;
     analysisMessage += `Time Complexity: ${timeComplexity}\n`;
     
-    // Add analysis information to the explanation
     explanation += `\n\n${analysisMessage}`;
     
     explanationText.innerText = explanation;
@@ -409,10 +391,9 @@ function drawPath() {
     if (start.x == -1) return;
     do {
         tmp = stack.pop();
-        stepsTaken.push({ x: tmp.x, y: tmp.y }); // Track the step taken
-        pathLength++; // Increment path length
+        stepsTaken.push({ x: tmp.x, y: tmp.y });
+        pathLength++;
 
-	// Log the current state
         console.log("Steps Taken:", stepsTaken.length);
         console.log("Path Length:", pathLength);
 
@@ -556,7 +537,7 @@ function Dijkstra() {
 
 	function step() {
 		if (priorityQueue.length === 0) {
-            return; // No more nodes to process
+            return;
         }
 
 		// Sort queue to get the cell with the smallest distance
@@ -575,9 +556,9 @@ function Dijkstra() {
 
 		// Check if we've reached the end
 		if (x === end.x && y === end.y) {
-			game = 0; // Set game state to over
-            stopTimer(); // Stop the timer
-            drawPath(); // Draw the final path
+			game = 0;
+            stopTimer();
+            drawPath();
 			return;
 		}
 
@@ -596,15 +577,12 @@ function Dijkstra() {
 				priorityQueue.push({ x: nx, y: ny, dist: newDist });
 				stack.push({ x: nx, y: ny });
 
-				// Update visuals for pathfinding progress
 				if (maze[nx][ny] === 0) drawRect(neighbours[i], 4);
 			}
 		}
 
 		// Visualize current path point
 		if (maze[x][y] === 4) drawRect({ x, y }, 2);
-
-		// Conditional animation based on `isAniSolv`
 		if (isAniSolv) {
 			requestAnimationFrame(step);
 		} else {
@@ -612,7 +590,6 @@ function Dijkstra() {
 		}
 	}
 
-	// Start the first step
 	if (isAniSolv) {
 		requestAnimationFrame(step);
 	} else {
@@ -621,10 +598,10 @@ function Dijkstra() {
 }
 
 function solveMaze() {
-    if (start.x == -1 || end.x == -1) return; // Ensure both points are set
-    stepsTaken = []; // Reset steps for each solve
-    pathLength = 0; // Reset path length
-    pathCoordinates = []; // Reset path coordinates
+    if (start.x == -1 || end.x == -1) return;
+    stepsTaken = [];
+    pathLength = 0;
+    pathCoordinates = [];
     switch (solverIdx) {
         case 0: 
             timeComplexity = "O(V + E)"; // BFS
@@ -738,7 +715,6 @@ function createCanvas(w, h) {
     ctx.fillStyle = "black"; ctx.fillRect(0, 0, wid, hei);
     var div = document.getElementById("maze");
     div.appendChild(canvas);
-    // Add event listener for mouse clicks
     canvas.addEventListener("mousedown", getCursorPos, false);
 }
 

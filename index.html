@@ -29,6 +29,7 @@
     </header>
 
     <main>
+      <!-- Home -->
       <section id="home" class="hero">
         <div class="container">
           <div class="hero-content">
@@ -101,6 +102,7 @@
         </div>
       </section>           
 
+      <!-- Settings -->
       <section id="settings">
         <div class="background-effects">
           <div class="gradient-sphere"></div>
@@ -198,72 +200,75 @@
             </div>
           </div>
 
-<!-- Theme Selection Section -->
-<div class="settings-row theme-section">
-  <label class="setting-label">Game Theme</label>
-  <p class="theme-instruction">Select a theme for your game to change the visual appearance of the maze.<br> Choose your favorite from the options below:</p>
-  <div class="theme-options">
-      <div class="theme-button">
-          <input id="color0" value="0" type="radio" name="colors" onclick="colorChange()" checked />
-          <label for="color0" style="background: linear-gradient(45deg, #64ffda, #111111, #fe53bb)">Neon Nights</label>
+      <!-- Theme Selection -->
+      <div class="settings-row theme-section">
+        <label class="setting-label">Game Theme</label>
+        <p class="theme-instruction">Select a theme for your game to change the visual appearance of the maze.<br> Choose your favorite from the options below:</p>
+        <div class="theme-options">
+            <div class="theme-button">
+                <input id="color0" value="0" type="radio" name="colors" onclick="colorChange()" checked />
+                <label for="color0" style="background: linear-gradient(45deg, #64ffda, #111111, #fe53bb)">Neon Nights</label>
+            </div>
+            <div class="theme-button">
+                <input id="color1" value="1" type="radio" name="colors" onclick="colorChange()" />
+                <label for="color1" style="background: linear-gradient(45deg, #00b4d8, #111111, #ff006e)">Cyber Punk</label>
+            </div>
+            <div class="theme-button">
+                <input id="color2" value="2" type="radio" name="colors" onclick="colorChange()" />
+                <label for="color2" style="background: linear-gradient(45deg, #004D4D, #008B8B, #00FFFF)">Ocean Deep</label>
+            </div>
+            <div class="theme-button">
+                <input id="color3" value="3" type="radio" name="colors" onclick="colorChange()" />
+                <label for="color3" style="background: linear-gradient(45deg, #E0FFFF, #B0E0E6, #FFFFFF)">Arctic Frost</label>
+            </div>
+        </div>
       </div>
-      <div class="theme-button">
-          <input id="color1" value="1" type="radio" name="colors" onclick="colorChange()" />
-          <label for="color1" style="background: linear-gradient(45deg, #00b4d8, #111111, #ff006e)">Cyber Punk</label>
-      </div>
-      <div class="theme-button">
-          <input id="color2" value="2" type="radio" name="colors" onclick="colorChange()" />
-          <label for="color2" style="background: linear-gradient(45deg, #004D4D, #008B8B, #00FFFF)">Ocean Deep</label>
-      </div>
-      <div class="theme-button">
-          <input id="color3" value="3" type="radio" name="colors" onclick="colorChange()" />
-          <label for="color3" style="background: linear-gradient(45deg, #E0FFFF, #B0E0E6, #FFFFFF)">Arctic Frost</label>
-      </div>
-  </div>
-</div>
           
-          <p id="hint_settings" onclick="$(this).fadeOut('slow')"></p>
+                <p id="hint_settings" onclick="$(this).fadeOut('slow')"></p>
+              </div>
+            </section>
+
+      <!-- Play -->
+      <section id="play">
+        <h2>LET'S GAME!</h2>
+        <div id="timer-display" class="timer">Time: 0.00s</div>
+        <div id="maze">Maze will be rendered here.</div>
+        <div class="button-group">
+            <button id="rst-btn" onclick="gameRestart()">Restart</button>
+            <button id="skp-btn1" onclick="skip1()">Skip Creating</button>
+            <button id="skp-btn2" onclick="skip2()">Skip Solving</button>
+        </div>
+    
+        <div id="algorithm-explanation-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" onclick="closeModal()">&times;</span>
+                <h2>Algorithm Explanation</h2>
+                <p id="algorithm-explanation-text">Algorithm explanation text will go here.</p>
+            </div>
+            <p id="hint_play" onclick="$(this).fadeOut('slow')"> </p>
+            <div class="spacer" id="btm"></div>
         </div>
       </section>
 
-  <section id="play">
-    <h2>LET'S GAME!</h2>
-    <div id="timer-display" class="timer">Time: 0.00s</div>
-    <div id="maze">Maze will be rendered here.</div>
-    <div class="button-group">
-        <button id="rst-btn" onclick="gameRestart()">Restart</button>
-        <button id="skp-btn1" onclick="skip1()">Skip Creating</button>
-        <button id="skp-btn2" onclick="skip2()">Skip Solving</button>
-    </div>
-    
-    <div id="algorithm-explanation-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" onclick="closeModal()">&times;</span>
-            <h2>Algorithm Explanation</h2>
-            <p id="algorithm-explanation-text">Algorithm explanation text will go here.</p>
-        </div>
-        <p id="hint_play" onclick="$(this).fadeOut('slow')"> </p>
-        <div class="spacer" id="btm"></div>
-    </div>
-</section>
+      <!-- Leaderboard -->
+      <section id="leaderboard" class="leaderboard-container">
+        <h2 class="leaderboard-title">Leaderboard</h2>
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Time (seconds)</th>
+                    <th>Algorithm</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboard-entries">
+                <!-- Rows will be populated here by JavaScript -->
+            </tbody>
+        </table>
+      </section>
 
-<section id="leaderboard" class="leaderboard-container">
-  <h2 class="leaderboard-title">Leaderboard</h2>
-  <table class="leaderboard-table">
-      <thead>
-          <tr>
-              <th>Rank</th>
-              <th>Username</th>
-              <th>Time (seconds)</th>
-              <th>Algorithm</th>
-          </tr>
-      </thead>
-      <tbody id="leaderboard-entries">
-          <!-- Rows will be populated here by JavaScript -->
-      </tbody>
-  </table>
-</section>
-
+      <!-- About Us -->
       <section id="aboutus" class="aboutus">
         <div class="container">
           <h2>Client Testimonials</h2>
