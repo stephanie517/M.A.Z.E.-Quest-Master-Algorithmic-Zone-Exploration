@@ -168,6 +168,30 @@ function displayLeaderboard() {
     });
 }
 
+function saveLeaderboard(username, time, algorithm) {
+    fetch('http://127.0.0.1:5000/save_leaderboard', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, time, algorithm })
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+}
+
+function fetchLeaderboard() {
+    fetch('http://127.0.0.1:5000/get_leaderboard')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Leaderboard:', data);
+            // Display leaderboard in your HTML
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+
 // stack stores the visited addresses, stack_next stores the next possible positions
 // tmp stores the top element of the stack every time the function pops from the stack after the path search ends
 // game = 1 means the game is running, 0 means the game is over
