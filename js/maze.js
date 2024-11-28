@@ -54,14 +54,12 @@ function openUsernameModal() {
   
 	localStorage.setItem("username", usernameInput);
   
+	const modalTemplate = document.getElementById("modal-template").content.cloneNode(true);
+	modalTemplate.querySelector(".username-highlight").textContent = usernameInput;
+	
 	const modalContent = document.getElementById("modal-content");
-	modalContent.innerHTML = `
-	  <span class="close-button" onclick="closeUsernameModal()">&times;</span>
-	  <h2>Welcome, ${usernameInput}!</h2>
-	  <p>What would you like to do next?</p>
-	  <button id="play-now-btn" onclick="gameStart()">Play Now!</button>
-	  <button id="settings-btn" onclick="goToSettings()">Go to Settings</button>
-	`;
+	modalContent.innerHTML = "";
+	modalContent.appendChild(modalTemplate);	
   }
 
 function goToSettings() {

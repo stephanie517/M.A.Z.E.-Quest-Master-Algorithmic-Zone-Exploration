@@ -47,6 +47,14 @@
         </div>
       </section>
       
+      <template id="modal-template">
+        <span class="close-button" onclick="closeUsernameModal()">&times;</span>
+        <h2>Welcome, <span class="username-highlight"></span>!</h2>
+        <p>What would you like to do next?</p>
+        <button id="play-now-btn" onclick="gameStart()">Play Now!</button>
+        <button id="settings-btn" onclick="goToSettings()">Go to Settings</button>
+      </template>
+      
       <div id="username-modal" class="modal" style="display: none;">
         <div class="modal-content" id="modal-content">
           <span class="close-button" onclick="closeUsernameModal()">&times;</span>
@@ -233,6 +241,7 @@
         <h2>LET'S PLAY!</h2>
         <div id="timer-display" class="timer">Time: 0.00s</div>
         <div id="maze">Maze will be rendered here.</div>
+        <p id="hint_play" onclick="$(this).fadeOut('slow')"> </p>
         <div class="button-group">
             <button id="rst-btn" onclick="gameRestart()">Restart</button>
             <button id="skp-btn1" onclick="skip1()">Skip Creating</button>
@@ -245,7 +254,6 @@
                 <h2>Algorithm Explanation</h2>
                 <p id="algorithm-explanation-text">Algorithm explanation text will go here.</p>
             </div>
-            <p id="hint_play" onclick="$(this).fadeOut('slow')"> </p>
             <div class="spacer" id="btm"></div>
         </div>
       </section>

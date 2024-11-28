@@ -899,6 +899,8 @@ input[type="radio"] {
   width: 50%;
   max-width: 600px;
   box-shadow: 0 4px 6px var(--glass-border);
+  align-items: center;
+  text-align: center;
 }
 
 .modal-content:hover {
@@ -942,6 +944,11 @@ input[type="radio"] {
 
 #username-modal {
   animation: fadeIn 0.5s ease-in-out;
+}
+
+.username-highlight {
+  color: var(--accent);
+  font-weight: bold;
 }
 
 .close-button {
