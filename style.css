@@ -134,6 +134,27 @@ nav a {
 nav a:hover {
   color: var(--accent);
 }
+nav ul li:last-child {
+  margin-left: 1rem;
+}
+.play-button {
+  padding: 0.6em 1.5em;
+  border-radius: 25px; 
+  background: var(--accent); 
+  color: var(--bg-primary);
+  font-weight: 600;
+  text-shadow: 0 0 5px var(--accent), 0 0 10px var(--accent);
+  transition: var(--transition);
+  box-shadow: 0 0 10px var(--accent), 0 0 20px rgba(100, 255, 218, 0.3);
+  margin-left: 2rem;
+}
+.play-button:hover {
+  color: #000000;
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(100, 255, 218, 0.5),
+    0 0 30px rgba(100, 255, 218, 0.4),
+    0 0 40px rgba(100, 255, 218, 0.3);
+}
 
 /* hero section or banner section */
 .hero {
@@ -1181,6 +1202,7 @@ footer {
   .hero-image {
     max-width: 300px;
     width: 100%;
+    filter: brightness(60%);
   }
   .hero h1 {
     font-size: 2.5rem;
