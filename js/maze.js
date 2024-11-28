@@ -36,15 +36,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function openUsernameModal() {
 	const modal = document.getElementById("username-modal");
-	modal.style.display = "flex";
+	modal.style.display = "block";
   }
-  
-  function closeUsernameModal() {
+function closeUsernameModal() {
 	const modal = document.getElementById("username-modal");
 	modal.style.display = "none";
   }
   
-  function createUsername() {
+function createUsername() {
 	const usernameInput = document.getElementById("username-input").value.trim();
   
 	if (usernameInput === "") {
@@ -60,13 +59,13 @@ function openUsernameModal() {
 	const modalContent = document.getElementById("modal-content");
 	modalContent.innerHTML = "";
 	modalContent.appendChild(modalTemplate);	
-  }
+}
 
 function goToSettings() {
 	alert("Navigating to Settings...");
 	closeUsernameModal();
 	window.location.hash = "#settings";
-  }
+}
 
 let startTime, endTime, timerInterval;
 let isTimerRunning = false;
@@ -739,80 +738,140 @@ function createCanvas(w, h) {
 }
 
 function gameStart() {
-	alert("Starting the game...");
-    closeUsernameModal();
+	const savedUsername = localStorage.getItem("username");
+	
+	if (!savedUsername) {
+		openUsernameModal();
+		return;
+	}
+	
+	alert(`Welcome back, ${savedUsername}!`);
+	closeUsernameModal();
 	window.location.hash = "#play";
 
-    if (game)
-        return;
-    
+    if (game) return;
+
     if (isTimerRunning) {
         clearInterval(timerInterval);
         isTimerRunning = false;
     }
-    
+
     game = 1;
     iniGame();
+
     $("#solver0").attr("disabled", true);
     $("#solver1").attr("disabled", true);
     $("#solver2").attr("disabled", true);
     $("#solver3").attr("disabled", true);
+
     prompt_settings("You can change solver and difficulty after game!");
-    
+
     const mazeContainer = document.getElementById("maze");
     mazeContainer.innerHTML = "";
-    var div = document.getElementById("maze");
+
     var canvas = document.getElementById("canvas");
-    if (canvas)
-        div.removeChild(canvas);
-    
+    if (canvas) {
+        mazeContainer.removeChild(canvas);
+    }
+
     createCanvas(grid * cols, grid * rows);
     maze = createArray(cols, rows);
-    
-    // Randomize start point within the first half of the maze
+
     start.x = Math.floor(Math.random() * (cols / 2));
     start.y = Math.floor(Math.random() * (rows / 2));
-    
-    // Ensure start coordinates are odd for maze generation
+
     if (!(start.x & 1)) start.x++;
     if (!(start.y & 1)) start.y++;
-    
+
     drawRect(start, 0);
     $("#rst-btn").fadeIn("slow");
     prompt_play("Creating Maze~");
-    
-    if (isAniMaze)
+
+    if (isAniMaze) {
         $("#skp-btn1").fadeIn("slow");
-    
+    }
+
     createMaze();
     drawMaze();
 }
 
 function gameRestart() {
-	game = 0;
-	var div = document.getElementById("maze");
-	var canvas = document.getElementById("canvas");
-	div.removeChild(canvas);
-	gameStart();
+    closeModal();
+    game = 0;
 
-	// Force animation mode for maze generation
-    isAniMaze = true;
-    $("#inAniMaze").prop("checked", true);
+    const mazeContainer = document.getElementById("maze");
+    const existingCanvas = document.getElementById("canvas");
+    if (existingCanvas) {
+        mazeContainer.removeChild(existingCanvas);
+    }
 
-	// Navigate to settings section
-    window.location.hash = "#settings";
+    iniGame();
 
-    // Re-enable algorithm selection buttons
+    solverIdx = 0;
+    colorIdx = 0;
+    currentAlgorithm = "BFS";
+
+    if (isTimerRunning) {
+        stopTimer();
+    }
+
     $("#solver0").attr("disabled", false);
     $("#solver1").attr("disabled", false);
     $("#solver2").attr("disabled", false);
     $("#solver3").attr("disabled", false);
 
-    // Clear any previous game state
+    $("#rst-btn").fadeOut("slow");
+    $("#skp-btn1").fadeOut("slow");
+    $("#skp-btn2").fadeOut("slow");
+
+    isAniMaze = true;
+    isAniSolv = true;
+    $("#inAniMaze").prop("checked", true);
+    $("#inAniSolv").prop("checked", true);
+
+    window.location.hash = "#settings";
+    prompt_play("Game Reset. Select settings and start a new game.");
+}
+
+function quitGame() {
+	localStorage.removeItem("username");
+
+    if (isTimerRunning) {
+        stopTimer();
+    }
+
+    closeModal();
+    game = 0;
     iniGame();
-    
-    // Prompt user to select start and end points
-    prompt_play("Note: Please select two points for path observation by computer.");
+
+    const mazeContainer = document.getElementById("maze");
+    const existingCanvas = document.getElementById("canvas");
+    if (existingCanvas) {
+        mazeContainer.removeChild(existingCanvas);
+    }
+
+    $("#rst-btn").fadeOut("slow");
+    $("#skp-btn1").fadeOut("slow");
+    $("#skp-btn2").fadeOut("slow");
+
+    // Enable solver options
+    $("#solver0").attr("disabled", false);
+    $("#solver1").attr("disabled", false);
+    $("#solver2").attr("disabled", false);
+    $("#solver3").attr("disabled", false);
+
+    const modal = document.getElementById("username-modal");
+    if (modal) {
+        modal.style.display = "none";
+        modal.classList.add('hidden');
+    }
+
+    const usernameInput = document.getElementById("username-input");
+    if (usernameInput) {
+        usernameInput.value = "";
+    }
+
+    window.location.hash = "#home";
 }
 
 function checkChange() {
