@@ -7,8 +7,8 @@ let pathLength = 0;
 let timeComplexity = "";
 
 colors = [
-	["#64ffda", "#111111", "#fe53bb", "#3a86ff", "#ff6b35", "#8338ec", "#f7d716"], //Neon Nights
-    ["#00b4d8", "#111111", "#ff006e", "#8338ec", "#3a86ff", "#fb5607", "#ffbe0b"], //Cyber Punk
+	["#64FFDA", "#111111", "#FE53BB", "#3A86FF", "#FF6B35", "#8338EC", "#F7D716"], //Neon Nights
+    ["#00B4D8", "#111111", "#FF006E", "#8338EC", "#3A86FF", "#FB5607", "#FFBE0B"], //Cyber Punk
     ["#004D4D", "#008B8B", "#00FFFF", "#00BFFF", "#20B2AA", "#00CED1", "#00FFFF"], //Ocean Deep
 	["#E0FFFF", "#B0E0E6", "#FFFFFF", "#000000", "#E0FFFF", "#000000", "#000000"] //Arctic Frost
 ];
@@ -186,7 +186,6 @@ function fetchLeaderboard() {
         .then(response => response.json())
         .then(data => {
             console.log('Leaderboard:', data);
-            // Display leaderboard in your HTML
         })
         .catch(error => console.error('Error:', error));
 }
@@ -307,7 +306,6 @@ function isNext(a, b) {
 function drawRect(VAR, TO) {
     maze[VAR.x][VAR.y] = TO;
 
-    // Set shadow properties for glowing effect
     ctx.shadowColor = "rgba(100, 255, 218, 0.8)";
     ctx.shadowBlur = 20;
     ctx.shadowOffsetX = 0;
