@@ -266,6 +266,8 @@ function gameOver() {
         console.log("Path Length:", pathLength);
         console.log("Time Complexity:", timeComplexity);
 
+		$("#skp-btn2").fadeOut("slow");
+
         showAlgorithmExplanation(currentAlgorithm, stepsTaken.length, pathLength, timeComplexity);
 		openModal();
     }
