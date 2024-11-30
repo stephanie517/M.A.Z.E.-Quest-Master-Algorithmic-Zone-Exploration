@@ -164,7 +164,18 @@ function updateLeaderboard(username, time) {
         leaderboard = leaderboard.slice(0, 10);
     }
 
+	// Save to localStorage
+    localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+
     displayLeaderboard();
+}
+
+function loadLeaderboard() {
+    const savedLeaderboard = localStorage.getItem('leaderboard');
+    if (savedLeaderboard) {
+        leaderboard = JSON.parse(savedLeaderboard);
+        displayLeaderboard();
+    }
 }
 
 function displayLeaderboard() {
@@ -257,24 +268,23 @@ function gameOver() {
         prompt_play(`Maze completed in ${finalTime.toFixed(2)} seconds!`);
 
         // Calculate time complexity based on the algorithm
-		if (solverIdx === 0 || solverIdx === 3) { // BFS or DFS
-			timeComplexity = `O(${cols * rows} + ${cols * rows * 4})`;
-		} else if (solverIdx === 4) { // Dijkstra
-			timeComplexity = `O(${cols * rows}^2)`;
-		} else if (solverIdx === 1) { // A*
-			let branchingFactor = 4; // Up, down, left, right
-			let depth = Math.ceil(Math.sqrt(cols * rows)); // Approximate maximum depth in a grid
-			timeComplexity = `O(${branchingFactor}^${depth}) or O(${cols * rows})`;
-		} else if (solverIdx === 2) { // WFS
-			timeComplexity = `O(${cols} * ${rows}) or O(${cols}^3)`;
-		}		
+        if (solverIdx === 0 || solverIdx === 3) { // BFS or DFS
+            timeComplexity = `O(${cols * rows} + ${cols * rows * 4})`;
+        } else if (solverIdx === 4) { // Dijkstra
+            timeComplexity = `O(${cols * rows}^2)`;
+        } else if (solverIdx === 1) { // A* or similar
+            timeComplexity = `O(${branchingFactor}^${depth}) or O(${cols * rows})`;
+        } else if (solverIdx === 2) { // WFS
+            timeComplexity = `O(${cols} * ${rows}) or O(${cols}^3)`;
+        }       
 
         console.log("Steps Taken:", stepsTaken.length);
         console.log("Path Length:", pathLength);
         console.log("Time Complexity:", timeComplexity);
 
+        // Ensure the values are passed correctly to the explanation modal
         showAlgorithmExplanation(currentAlgorithm, stepsTaken.length, pathLength, timeComplexity);
-		openModal();
+        openModal();
     }
 
     iniGame();
@@ -562,76 +572,114 @@ function DFS() {
 		}
 	}
 }
+
 function Dijkstra() {
-	if (start.x === -1) return;
+    if (start.x === -1) return;
 
-	// Initialize distance and priority queue for visualization
-	let distance = Array.from(Array(maze.length), () => Array(maze[0].length).fill(Infinity));
-	distance[start.x][start.y] = 0;
+    // Reset steps taken and path length at the start of the algorithm
+    stepsTaken = [];
+    pathLength = 0;
 
-	let priorityQueue = [{ x: start.x, y: start.y, dist: 0 }];
-	let visited = new Set();
+    // Initialize distance and priority queue for visualization
+    let distance = Array.from(Array(maze.length), () => Array(maze[0].length).fill(Infinity));
+    distance[start.x][start.y] = 0;
 
-	function step() {
-		if (priorityQueue.length === 0) {
+    let priorityQueue = [{ x: start.x, y: start.y, dist: 0 }];
+    let visited = new Set();
+    let path = new Map(); // To track the path
+
+    function step() {
+        if (priorityQueue.length === 0) {
+            console.error("Priority queue is empty, cannot find path");
+            gameOver();
             return;
         }
 
-		// Sort queue to get the cell with the smallest distance
-		priorityQueue.sort((a, b) => a.dist - b.dist);
-		let { x, y, dist } = priorityQueue.shift();
-		let currentKey = `${x}-${y}`;
-		if (visited.has(currentKey)) {
-			if (isAniSolv) {
-				requestAnimationFrame(step);
-			} else {
-				step();
-			}
-			return;
-		}
-		visited.add(currentKey);
+        // Sort queue to get the cell with the smallest distance
+        priorityQueue.sort((a, b) => a.dist - b.dist);
+        let { x, y, dist } = priorityQueue.shift();
+        let currentKey = `${x}-${y}`;
 
-		// Check if we've reached the end
-		if (x === end.x && y === end.y) {
-			game = 0;
+        if (visited.has(currentKey)) {
+            if (isAniSolv) {
+                requestAnimationFrame(step);
+            } else {
+                step();
+            }
+            return;
+        }
+        visited.add(currentKey);
+
+        // Ensure we add the current position to steps taken
+        stepsTaken.push({ x, y });
+        pathLength++;
+
+        console.log("Current position:", x, y);
+        console.log("Steps Taken:", stepsTaken.length);
+        console.log("Path Length:", pathLength);
+
+        // Check if we've reached the end
+        if (x === end.x && y === end.y) {
+            game = 0; // Set game state to over
+
+            // Reconstruct the path
+            let currentStep = { x, y };
+            let reconstructedPath = [currentStep];
+            while (path.has(`${currentStep.x}-${currentStep.y}`)) {
+                currentStep = path.get(`${currentStep.x}-${currentStep.y}`);
+                reconstructedPath.unshift(currentStep);
+            }
+
+            // Update steps taken with the reconstructed path
+            stepsTaken = reconstructedPath;
+            pathLength = reconstructedPath.length;
+
+            console.log("Final Steps Taken:", stepsTaken.length);
+            console.log("Final Path Length:", pathLength);
+
+			showAlgorithmExplanation(currentAlgorithm, stepsTaken.length, pathLength, timeComplexity);
             stopTimer();
             drawPath();
-			return;
-		}
+            gameOver();
+            return;
+        }
 
-		// Get neighbors and process each one
-		let neighbours = [];
-		getFNeighbours(neighbours, x, y, 0);
-		getFNeighbours(neighbours, x, y, 5);
+        // Get neighbors and process each one
+        let neighbours = [];
+        getFNeighbours(neighbours, x, y, 0);
+        getFNeighbours(neighbours, x, y, 5);
 
-		for (let i = 0; i < neighbours.length; i++) {
-			let nx = neighbours[i].x;
-			let ny = neighbours[i].y;
-			let newDist = dist + 1; // Assuming uniform cost of 1
+        for (let i = 0; i < neighbours.length; i++) {
+            let nx = neighbours[i].x;
+            let ny = neighbours[i].y;
+            let newDist = dist + 1; // Assuming uniform cost of 1
 
-			if (newDist < distance[nx][ny]) {
-				distance[nx][ny] = newDist;
-				priorityQueue.push({ x: nx, y: ny, dist: newDist });
-				stack.push({ x: nx, y: ny });
+            if (newDist < distance[nx][ny]) {
+                distance[nx][ny] = newDist;
+                priorityQueue.push({ x: nx, y: ny, dist: newDist });
+                
+                // Track the path
+                path.set(`${nx}-${ny}`, { x, y });
 
-				if (maze[nx][ny] === 0) drawRect(neighbours[i], 4);
-			}
-		}
+                if (maze[nx][ny] === 0) drawRect(neighbours[i], 4);
+            }
+        }
 
-		// Visualize current path point
-		if (maze[x][y] === 4) drawRect({ x, y }, 2);
-		if (isAniSolv) {
-			requestAnimationFrame(step);
-		} else {
-			step();
-		}
-	}
+        // Visualize current path point
+        if (maze[x][y] === 4) drawRect({ x, y }, 2);
 
-	if (isAniSolv) {
-		requestAnimationFrame(step);
-	} else {
-		step();
-	}
+        if (isAniSolv) {
+            requestAnimationFrame(step);
+        } else {
+            step();
+        }
+    }
+
+    if (isAniSolv) {
+        requestAnimationFrame(step);
+    } else {
+        step();
+    }
 }
 
 function solveMaze() {
@@ -923,4 +971,6 @@ function init() {
 	document.getElementById('difficulty-select').value = 'medium';
 	document.getElementById('difficulty-select').addEventListener('change', setDifficultyLevel);
 	setDifficultyLevel();
+
+	loadLeaderboard();
 }
