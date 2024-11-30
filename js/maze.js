@@ -457,43 +457,35 @@ function drawPath() {
     }
 }
 function BFS_Astar() {
-	if (start.x == -1)
-		return;
-	while (true) {
-		if (game == 0 || (start.x == end.x && start.y == end.y) ) {
-			game = 0;
-			drawPath();
-			if (stack.length < 1) 
-				return;
-		}
-		else {
-			var neighbours = [];
-			getFNeighbours(neighbours, start.x, start.y, 0);
-			getFNeighbours(neighbours, start.x, start.y, 5);
-			// Push the current step into the stack
-			stack.push(start);
-			// If the place being moved to is a "to be walked" position, and not the start/end point, change it to "current path" color
-			if (maze[start.x][start.y] == 4)
-				drawRect(start, 2);
-			// If there are places around the current node
-			if (neighbours.length) {
-				// Push all walkable places into the "walkable stack", stack_next, and greedily sort stack_next by BFS
-				for (var i = 0; i < neighbours.length; ++i) {
-					stack_next.push(neighbours[i]);
-					// Change the color of the "to be walked" empty spots
-					if (maze[neighbours[i].x][neighbours[i].y] == 0)
-						drawRect(neighbours[i], 4);
-				}
-				stack_next.sort(sorter);
-			}
-			// Use the most greedy position as the next step to explore
-			start = stack_next.pop();
-		}
-		if (isAniSolv) {
-			requestAnimationFrame(BFS_Astar);
-			return;
-		}
-	}
+    if (start.x == -1) return;
+    
+    while (true) {
+        if (game == 0 || (start.x == end.x && start.y == end.y)) {
+            game = 0;
+            drawPath();
+            // Call to showAlgorithmExplanation after the game is over
+            showAlgorithmExplanation(currentAlgorithm, stepsTaken.length, pathLength, timeComplexity);
+            if (stack.length < 1) return;
+        } else {
+            var neighbours = [];
+            getFNeighbours(neighbours, start.x, start.y, 0);
+            getFNeighbours(neighbours, start.x, start.y, 5);
+            stack.push(start);
+            if (maze[start.x][start.y] == 4) drawRect(start, 2);
+            if (neighbours.length) {
+                for (var i = 0; i < neighbours.length; ++i) {
+                    stack_next.push(neighbours[i]);
+                    if (maze[neighbours[i].x][neighbours[i].y] == 0) drawRect(neighbours[i], 4);
+                }
+                stack_next.sort(sorter);
+            }
+            start = stack_next.pop();
+        }
+        if (isAniSolv) {
+            requestAnimationFrame(BFS_Astar);
+            return;
+        }
+    }
 }
 
 function WFS() {
