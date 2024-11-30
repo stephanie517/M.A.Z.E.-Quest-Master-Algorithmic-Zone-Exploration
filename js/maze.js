@@ -146,7 +146,18 @@ function updateLeaderboard(username, time) {
         leaderboard = leaderboard.slice(0, 10);
     }
 
+	// Save to localStorage
+    localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+
     displayLeaderboard();
+}
+
+function loadLeaderboard() {
+    const savedLeaderboard = localStorage.getItem('leaderboard');
+    if (savedLeaderboard) {
+        leaderboard = JSON.parse(savedLeaderboard);
+        displayLeaderboard();
+    }
 }
 
 function displayLeaderboard() {
@@ -905,4 +916,6 @@ function init() {
 	document.getElementById('difficulty-select').value = 'medium';
 	document.getElementById('difficulty-select').addEventListener('change', setDifficultyLevel);
 	setDifficultyLevel();
+
+	loadLeaderboard();
 }
