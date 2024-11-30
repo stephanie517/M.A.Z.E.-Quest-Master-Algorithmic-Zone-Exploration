@@ -32,6 +32,24 @@ document.addEventListener('DOMContentLoaded', function() {
             gameStart();
         });
     }
+
+	// Tutorial video functionality
+	const tutorialButton = document.getElementById('tutorialButton');
+	const tutorialModal = document.getElementById('tutorialModal');
+	const closeTutorialButton = document.querySelector('.close-button');
+
+	tutorialButton.addEventListener('click', function () {
+		tutorialModal.style.display = 'block';
+	});
+	closeTutorialButton.addEventListener('click', function () {
+		tutorialModal.style.display = 'none';
+	});
+	window.addEventListener('click', function (event) {
+		if (event.target === tutorialModal) {
+			tutorialModal.style.display = 'none';
+		}
+	});
+	
 });
 
 function openUsernameModal() {

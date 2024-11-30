@@ -38,9 +38,19 @@
             <p class="fade-in">Navigate the Maze, Master the Path – Explore Shortest Routes with Smart Algorithms!</p>
             <div class="cta-buttons">
               <a class="btn primary" onclick="openUsernameModal()">Start Game</button>
-              <a class="btn secondary">Watch tutorial</a>
+              <a class="btn secondary" id="tutorialButton">Watch tutorial</a>
             </div>
           </div>
+
+          <div id="tutorialModal" class="modal">
+            <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <video controls>
+              <source src="src/How to Play.mp4" type="video/mp4">
+            </video>
+            </div>
+          </div>
+
           <div class="hero-image">
             <img src="src/front.jpeg" alt="maze" />
           </div>

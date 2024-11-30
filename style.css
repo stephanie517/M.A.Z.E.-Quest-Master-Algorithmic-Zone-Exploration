@@ -492,6 +492,9 @@ nav ul li:last-child {
   transition: var(--transition);
   min-width: 150px;
 }
+.custom-select option {
+  color: #000000;
+}
 
 .select-icon {
   position: absolute;
@@ -519,7 +522,6 @@ nav ul li:last-child {
   padding: 0.7rem 1.4rem;
   cursor: pointer;
   transition: var(--transition);
-  display: flex;
   align-items: center;
   gap: 0.5rem;
   position: relative;
@@ -922,6 +924,11 @@ input[type="radio"] {
   box-shadow: 0 4px 6px var(--glass-border);
   align-items: center;
   text-align: center;
+}
+
+.modal-content video {
+  width: 100%;
+  border-radius: 8px;
 }
 
 .modal-content:hover {
