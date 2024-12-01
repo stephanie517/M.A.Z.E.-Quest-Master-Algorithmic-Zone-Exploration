@@ -7,7 +7,7 @@
 ## 📜 **Overview**  
 Welcome to **M.A.Z.E. QUEST**, where pathfinding meets fun! Ever wondered how algorithms like **A\*** and **Dijkstra** solve real-world problems? This game-turned-visualizer allows you to interactively explore the magic of pathfinding. Choose a starting and ending point, add obstacles, and watch algorithms dynamically calculate the optimal path.  
 
-<img src="assets/Home.png" alt="Solving Animation" width="1000" height="300">
+<img src="assets/Home.png" alt="Solving Animation" width="1000" height="400">
 
 M.A.Z.E. QUEST isn’t just a game – it’s an **educational journey wrapped in fun**! Perfect for students, coding enthusiasts, and curious minds, it offers a chance to visualize and experiment with real-world algorithms while solving exciting mazes.  
 
@@ -43,6 +43,12 @@ Ensure you have the following installed:
 - **Customize the Maze**:  
   - Create or skip maze creation for quicker gameplay.  
   - Add barriers and set start/end points.
+
+- **Additional**:
+    <img src="assets/toggle.png" alt="Solving Animation" width="1000" height="130">
+    - 🎨 Show drawing animation as the maze is being generated.
+    - ✨ Show solving animation as your selected algorithm calculates the path.
+  
 
 - **Solve the Maze**:  
   Watch solving animations as your selected algorithm calculates the path.  
@@ -83,7 +89,7 @@ Balances exploration with weighted prioritization for obstacles and detours.
 ---
 
 🎨 **Game Themes**  
-<img src="assets/game theme.png" alt="Solving Animation" width="1000" height="100">
+<img src="assets/game theme.png" alt="Solving Animation" width="1000" height="350">
 Select a visual theme to change the appearance of your maze:  
 - 🌌 **Neon Nights**  
 - 🖤 **Cyber Punk**  
