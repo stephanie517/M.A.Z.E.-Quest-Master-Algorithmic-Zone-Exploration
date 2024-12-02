@@ -5,7 +5,7 @@ from firebase_admin import credentials, db
 # Initialize Firebase
 cred = credentials.Certificate("service-account-key.json")  # Path to your Firebase service account key JSON file
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'ttps://maze-56ae0-default-rtdb.firebaseio.com/'  # Replace with your Firebase Realtime Database URL
+    'databaseURL': 'https://maze-56ae0-default-rtdb.firebaseio.com/'  # Replace with your Firebase Realtime Database URL
 })
 
 # Flask App
