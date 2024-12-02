@@ -1,83 +1,112 @@
 <h1 align="center"><b>🌐 M.A.Z.E. Quest 🌐</b></h1>
 <h2 align="center"><b>Master Algorithmic Zone Exploration</b></h2>
-
-## 📜 Overview
-**M.A.Z.E. Quest** is an educational and engaging pathfinding maze game where players guide a character from the start to the goal using pathfinding algorithms. The game showcases key computer science concepts by allowing players to experience how algorithms like **Dijkstra’s** and **A\*** solve complex pathfinding challenges. Players can select an algorithm and witness a real-time, step-by-step visual demonstration of its approach to finding the shortest path.
+<h2 align="center"><b>Navigate the Maze, Master the Path – Explore Shortest Routes with Smart Algorithms!</b></h2>
 
 ---
 
-## 🎮 Features
-- **🧭 Algorithm Selection**: Choose between Dijkstra's algorithm and A* algorithm to see their different approaches to pathfinding.
-- **🛠️ Maze Customization**: Players can generate or customize maze layouts and set difficulty levels by adding barriers or special zones.
-- **📈 Real-Time Visualization**: Watch as the selected algorithm navigates the maze, exploring paths and finding the optimal route.
-- **📚 Educational Pop-Ups**: Learn about each algorithm’s function, heuristics, and time complexity through interactive in-game explanations.
-- **🌍 Cross-Platform Compatibility**: The game is designed to be responsive and playable across various devices and browsers.
+## 📜 **Overview**  
+Welcome to **M.A.Z.E. QUEST**, where pathfinding meets fun! Ever wondered how algorithms like **A\*** and **Dijkstra** solve real-world problems? This game-turned-visualizer allows you to interactively explore the magic of pathfinding. Choose a starting and ending point, add obstacles, and watch algorithms dynamically calculate the optimal path.  
+
+<img src="assets/Home.png" alt="Solving Animation" width="1000" height="400">
+
+M.A.Z.E. QUEST isn’t just a game – it’s an **educational journey wrapped in fun**! Perfect for students, coding enthusiasts, and curious minds, it offers a chance to visualize and experiment with real-world algorithms while solving exciting mazes.  
 
 ---
 
-## 🚀 Getting Started
+## 🎮 **Key Features**  
+<img src="assets/About Game.png" alt="Solving Animation" width="1000" height="400">
 
-### Prerequisites
-To run M.A.Z.E. Quest locally, you will need:
-- **🖥️ Node.js** (for backend development)
-- **🌐 A modern web browser** (for frontend compatibility)
-
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/username/MAZE-Quest.git
-   cd MAZE-Quest
-   ```
-2. Install the required dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm start
-   ```
-
-4. Open your browser and go to `http://localhost:3000`.
+- **🧭 Algorithm Explorer**: Choose from **A\***, **WFS**, **BFS**, **DFS**, or **Dijkstra** to solve the maze.  
+- **🎨 Game Themes**: Customize the maze’s appearance with themes like **Neon Nights**, **Cyber Punk**, **Ocean Deep**, and **Arctic Frost**.  
+- **✨ Real-Time Visualizations**: See step-by-step recalculations as algorithms adapt to obstacles and waypoints.  
+- **📈 Educational Pop-Ups**: After solving, view a detailed explanation of steps taken, path length, and time complexity.  
+- **🏆 Leaderboards**: Track your fastest times and compare performance across algorithms.  
 
 ---
 
-## 🕹️ How to Play
-1. **Select Algorithm**: On the start menu, choose either Dijkstra’s or A* as your pathfinding algorithm.
-2. **Customize the Maze**: Create a maze layout by selecting difficulty levels or manually adding barriers to create obstacles.
-3. **Start the Game**: Guide the character to the maze finish, watching as the algorithm calculates the optimal path.
-4. **Learn and Experiment**: Experiment with different maze layouts and algorithm settings to see how each algorithm approaches the challenge.
+## 🚀 **Getting Started**  
+
+### Prerequisites  
+Ensure you have the following installed:  
+- 🖥️ **Python 3.8+** for backend development.  
+- 🔥 **Flask** for creating backend APIs.  
+- 🛠️ **Firebase** for managing leaderboard and user data.  
+- 🌐 **Node.js** for frontend development.  
+- 🌐 **A modern web browser** for frontend compatibility.  
+
+🕹️ **How to Play**  
+- **Select Difficulty and Algorithm**:  
+  Choose your difficulty and algorithm (A*, Dijkstra, BFS, etc.) from the start menu.
+  <img src="assets/difficulty.png" alt="Solving Animation" width="1000" height="100">
+  <img src="assets/solver.png" alt="Solving Animation" width="1000" height="100">
+
+- **Customize the Maze**:  
+  - Create or skip maze creation for quicker gameplay.  
+  - Add barriers and set start/end points.
+
+- **Additional**:
+    <img src="assets/toggle.png" alt="Solving Animation" width="1000" height="130">
+    - 🎨 Show drawing animation as the maze is being generated.
+    - ✨ Show solving animation as your selected algorithm calculates the path.
+  
+
+- **Solve the Maze**:  
+  Watch solving animations as your selected algorithm calculates the path.  
+  After completion, view an educational pop-up explaining:
+  - Algorithm
+  - Steps taken.  
+  - Path length.  
+  - Time complexity.
+- **Restart or Quit**:  
+  Use the pop-up menu after solving to restart the maze or exit the game.
+
+<img src="assets/Play.png" alt="Solving Animation" width="1000" height="400">
+
+- **Leaderboard**:  
+  ![Leaderboard](assets/Leaderboard.jpg)  
+  - Fastest times rank highest.  
+  - Track and compare your performance with stored trial records.
 
 ---
 
-## 🗂️ Project Structure
-- **Frontend**: Handles the user interface, game visuals, and algorithm animations. Built with HTML5, CSS3, and JavaScript.
-- **Backend**: Manages pathfinding computations, custom maze storage, and score tracking. Built with Node.js.
-- **Database**: Stores user progress, custom mazes, and leaderboard data (optional, based on game configuration).
+⚙️ **Algorithms Available**  
+
+📌 **Dijkstra’s Algorithm**:  
+A thorough, non-heuristic approach that evaluates all possible paths for accuracy.
+
+🧩 **A\* Algorithm**:  
+Combines Dijkstra's method with a heuristic to prioritize paths closer to the goal.
+
+🔄 **BFS (Breadth-First Search)**:  
+Explores all neighboring nodes layer by layer, ensuring the shortest path in unweighted mazes.
+
+🔍 **DFS (Depth-First Search)**:  
+Searches deeper into the maze before backtracking, suitable for exploring large areas.
+
+↔ **WFS (Weighted First Search)**:  
+Balances exploration with weighted prioritization for obstacles and detours.
 
 ---
 
-## ⚙️ Algorithms Used
-
-### 1. 📌 Dijkstra’s Algorithm
-A non-heuristic algorithm that calculates the shortest path to each point by evaluating all possible paths. It is thorough but may be slower in complex mazes.
-
-### 2. 🧩 A* Algorithm
-Combines Dijkstra’s method with a heuristic that prioritizes paths closer to the goal, typically making it faster. Ideal for larger or more complex maze layouts.
-
----
-
-## 👥 Development Team
-- **Frontend Developer**: ARMEDILLA, REINA LIZ B.
-- **Backend Developer**: MENDOZA, FAITH ALLYSON R.
-- **Project Manager/Fullstack Developer**: PEREZ, STEPHANIE I.
-- **Instructor**: Ms. Fatima Marie P. Agdon, MSCS
+🎨 **Game Themes**  
+<img src="assets/game theme.png" alt="Solving Animation" width="1000" height="350">
+Select a visual theme to change the appearance of your maze:  
+- 🌌 **Neon Nights**  
+- 🖤 **Cyber Punk**  
+- 🌊 **Ocean Deep**  
+- ❄️ **Arctic Frost**  
 
 ---
 
-## 📄 License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+👥 **Development Team**  
+<img src="assets/About.png" alt="Solving Animation" width="1000" height="400">
 
 ---
 
-## 📬 Contact
-For questions or feedback, feel free to reach out to the development team via the repository’s issue tracker or contact details provided in the project.
+📄 **License**  
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+---
+
+📬 **Contact**  
+For questions, suggestions, or issues, reach out via the repository’s issue tracker or directly contact the development team.
